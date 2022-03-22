@@ -1,5 +1,5 @@
-﻿
-if GetLocale() ~= "ruRU" then return end
+﻿-- local locale = GetLocale()
+-- if locale  == "ruRU" then
 TELLMEWHEN_CMD_RESET = "Восстановить";
 TELLMEWHEN_CMD_OPTIONS = "Опции";
 
@@ -71,3 +71,5 @@ TELLMEWHEN_UIPANEL_TOOLTIP_COLUMNS = "Установите количество 
 TELLMEWHEN_UIPANEL_TOOLTIP_ONLYINCOMBAT = "Установите этот флажок, чтобы отображать эту группу значков только в бою.";
 TELLMEWHEN_UIPANEL_TOOLTIP_PRIMARYSPEC = "Установите этот флажок, чтобы отображать эту группу значков в основной спецификации";
 TELLMEWHEN_UIPANEL_TOOLTIP_SECONDARYSPEC = "Установите этот флажок, чтобы отображать эту группу значков во вторичной спецификации";
+
+-- end

@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 	<Script file="Localization\TellMeWhen-enUS.lua"/>
+	<Script file="Localization\TellMeWhen-ruRU.lua"/>
 	<Script file="TellMeWhen.lua"/>
 	<Script file="TellMeWhen_options.lua"/>
     <Script file="Lib\LibStub\LibStub.lua"/>

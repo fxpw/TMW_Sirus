@@ -443,7 +443,7 @@
 					</OnShow>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText("Выберите дял показа иконок в 1 спеке", nil, nil, nil, nil, 1);
+						GameTooltip:SetText("Выберите для показа иконок в 1 спеке", nil, nil, nil, nil, 1);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
@@ -471,7 +471,7 @@
 					</OnShow>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText("Выберите дял показа иконок в 2 спеке", nil, nil, nil, nil, 1);
+						GameTooltip:SetText("Выберите для показа иконок в 2 спеке", nil, nil, nil, nil, 1);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
@@ -499,7 +499,7 @@
 					</OnShow>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText("Выберите дял показа иконок в 3 спеке", nil, nil, nil, nil, 1);
+						GameTooltip:SetText("Выберите для показа иконок в 3 спеке", nil, nil, nil, nil, 1);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();

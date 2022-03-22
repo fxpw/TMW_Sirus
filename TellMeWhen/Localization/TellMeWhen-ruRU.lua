@@ -18,6 +18,7 @@ TELLMEWHEN_ICONMENU_COOLDOWN = "Кулдаун";
 TELLMEWHEN_ICONMENU_BUFFDEBUFF = "Баф/Дебаф";
 TELLMEWHEN_ICONMENU_REACTIVE = "Реагирующие спелл или способность";
 TELLMEWHEN_ICONMENU_WPNENCHANT = "Временные чары для оружия";
+TELLMEWHEN_ICONMENU_TOTEM = "Тотем";
 
 TELLMEWHEN_ICONMENU_OPTIONS = "Больше настроек";
 
@@ -36,9 +37,9 @@ TELLMEWHEN_ICONMENU_PLAYER = "Игрок";
 TELLMEWHEN_ICONMENU_TARGET = "Цель";
 TELLMEWHEN_ICONMENU_FOCUS = "Фокус";
 TELLMEWHEN_ICONMENU_PET = "Питомец";
-TELLMEWHEN_ICONMENU_TARGETTARGET = "ТаргетТаргета";
-TELLMEWHEN_ICONMENU_FOCUSTARGET = "ТаргетФокуса";
-TELLMEWHEN_ICONMENU_PETTARGET = "ТаргетПитомца";
+TELLMEWHEN_ICONMENU_TARGETTARGET = "Цель Цели";
+TELLMEWHEN_ICONMENU_FOCUSTARGET = "Цель Фокуса";
+TELLMEWHEN_ICONMENU_PETTARGET = "Цель Питомца";
 TELLMEWHEN_ICONMENU_BUFFSHOWWHEN = "Показывать  бафф/дебафф когда ";
 TELLMEWHEN_ICONMENU_PRESENT = "Когда наложен";
 TELLMEWHEN_ICONMENU_ABSENT = "Когда нету";
@@ -54,7 +55,7 @@ TELLMEWHEN_ICONMENU_OFFHAND = "Левая рука";
 TELLMEWHEN_ICONMENU_CLEAR = "Очистить настройки";
 
 TELLMEWHEN_UIPANEL_SUBTEXT1 = "Эти параметры позволяют изменять количество, расположение и поведение значков напоминаний.";
-TELLMEWHEN_UIPANEL_SUBTEXT2 = "Иконки работают в заблокированном состоянии. В разблокированном состоянии вы можете перемещать / изменять размер группы значков и щелкать правой кнопкой мыши отдельные значки для получения дополнительных настроек. Вы также можете ввести / tellmewhen или / tmw, чтобы заблокировать / разблокировать.";
+TELLMEWHEN_UIPANEL_SUBTEXT2 = "Иконки работают в заблокированном состоянии. В разблокированном состоянии вы можете\nперемещать / изменять размер группы значков и щелкать правой кнопкой мыши отдельные\nзначки для получения дополнительных настроек. Вы также можете ввести / tellmewhen\nили / tmw, чтобы заблокировать / разблокировать.";
 TELLMEWHEN_UIPANEL_ICONGROUP = "Группа значков";
 TELLMEWHEN_UIPANEL_ROWS = "Рядов";
 TELLMEWHEN_UIPANEL_COLUMNS = "Колонок";

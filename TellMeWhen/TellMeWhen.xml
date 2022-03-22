@@ -228,7 +228,7 @@
 			<AbsDimension x="14" y="20"/>
 		</Size>
 		<Frames>
-			<CheckButton name="$parentEnableButton" inherits="InterfaceOptionsCheckButtonTemplate">
+			<!-- <CheckButton name="$parentEnableButton" inherits="InterfaceOptionsCheckButtonTemplate">
 				<Anchors>
 					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT" />
 				</Anchors>
@@ -252,7 +252,7 @@
 						TellMeWhen_GroupEnableButton_OnClick(self);
 					</OnClick>
 				</Scripts>
-			</CheckButton>
+			</CheckButton> -->
 			<Frame name="$parentColumnsWidget">
 				<Size>
 					<AbsDimension x="64" y="32"/>

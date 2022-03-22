@@ -36,7 +36,7 @@ function TellMeWhen_GroupPositionReset_OnClick(self)
 		TellMeWhen_Settings["Locked"] = true;
 		TellMeWhen_Group_Update(groupID);
 	end
-	DEFAULT_CHAT_FRAME:Add_Message("TellMeWhen Group "..groupID.." position reset.");
+	DEFAULT_CHAT_FRAME:AddMessage("TellMeWhen Group "..groupID.." position reset.");
 end
 
 function TellMeWhen_GroupEnableButton_OnClick(self)

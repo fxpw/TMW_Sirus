@@ -189,7 +189,7 @@ function TellMeWhen_SafeUpgrade()
 	TellMeWhen_Settings["Spec"] = nil;  -- Remove "Spec" {}
 	end
 	-- End convert 1.1.6 to 1.2.0
-	if (TellMewhen_Settings["Version"] < "1.2.5") then
+	if (TellMeWhen_Settings["Version"] < "1.2.5") then
 		--no settings added yet in 1.2.5
 		local iconSettings
 		for groupID = 1, TELLMEWHEN_MAXGROUPS do

@@ -5,7 +5,7 @@
 	<Script file="Localization\TellMeWhen-ruRU.lua"/>
 	<Script file="TellMeWhen.lua"/>
 	<Script file="TellMeWhen_options.lua"/>
-    <Script file="Lib\LibStub\LibStub.lua"/>
+	<Script file="Lib\LibStub\LibStub.lua"/>
 
 	<Frame name="TellMeWhen_GroupTemplate" enableMouse="false" parent="UIParent" virtual="true">
 		<Size>
@@ -47,7 +47,7 @@
 						TellMeWhen_StopSizing(self, button);
 					</OnMouseUp>
 					<OnEnter>
-						TellMeWhen_GUIButton_OnEnter(self, TELLMEWHEN_RESIZE, TELLMEWHEN_RESIZE_TOOLTIP);
+						TellMeWhen_GUIButton_OnEnter(self, TELLMEWHEN_RESIZE_TOOLTIP);
 						local texture = getglobal(self:GetName().."Texture");
 						texture:SetVertexColor(1, 1, 1);
 					</OnEnter>
@@ -261,7 +261,7 @@
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
 						<Offset>
-							<AbsDimension x="164" y="0"/>
+							<AbsDimension x="20" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -333,7 +333,7 @@
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
 						<Offset>
-							<AbsDimension x="240" y="0"/>
+							<AbsDimension x="90" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -405,7 +405,7 @@
 				<Anchors>
 					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 						<Offset>
-							<AbsDimension x="300" y="0"/>
+							<AbsDimension x="140" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -433,7 +433,7 @@
 				<Anchors>
 					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 					<Offset>
-						<AbsDimension x="370" y="0"/>
+						<AbsDimension x="195" y="0"/>
 					</Offset>
 					</Anchor>
 				</Anchors>
@@ -443,7 +443,7 @@
 					</OnShow>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText("Выберите для показа иконок в 1 спеке", nil, nil, nil, nil, 1);
+						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC1, nil, nil, nil, nil, 1);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
@@ -461,7 +461,7 @@
 				<Anchors>
 					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 						<Offset>
-							<AbsDimension x="420" y="0"/>
+							<AbsDimension x="245" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -471,7 +471,7 @@
 					</OnShow>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText("Выберите для показа иконок в 2 спеке", nil, nil, nil, nil, 1);
+						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC2, nil, nil, nil, nil, 1);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
@@ -489,7 +489,7 @@
 				<Anchors>
 					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 						<Offset>
-							<AbsDimension x="460" y="0"/>
+							<AbsDimension x="295" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -499,7 +499,7 @@
 					</OnShow>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText("Выберите для показа иконок в 3 спеке", nil, nil, nil, nil, 1);
+						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC3, nil, nil, nil, nil, 1);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
@@ -510,6 +510,34 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
+			<CheckButton name="$parentSpec4Button" inherits="UICheckButtonTemplate" id="4">
+				<Size>
+					<AbsDimension x="25" y="25"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="345" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<!--Scripts>
+					<OnShow>
+						TellMeWhen_SpecButton_Update(self);
+					</OnShow>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
+						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC4, nil, nil, nil, nil, 1);
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+					<OnClick>
+						PlaySound("igMainMenuOptionCheckBoxOn");
+						TellMeWhen_SpecButton_OnClick(self);
+					</OnClick>
+				</Scripts> -->
+			</CheckButton>
 			<Button name="$parentGroupResetButton" text="TELLMEWHEN_UIPANEL_GROUPRESET" inherits="UIPanelButtonTemplate" >
 				<Size>
 					<AbsDimension x="80" y="30"/>
@@ -517,7 +545,7 @@
 				<Anchors>
 					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 						<Offset>
-							<AbsDimension x="510" y="0"/>
+							<AbsDimension x="500" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -589,7 +617,7 @@
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="128" y="50"/>
+								<AbsDimension x="128" y="70"/>
 							</Offset>
 						</Anchor>
 						<Anchor point="RIGHT">
@@ -603,7 +631,7 @@
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="164" y="-28"/>
+								<AbsDimension x="20" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -612,7 +640,7 @@
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="240" y="-28"/>
+								<AbsDimension x="90" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -621,43 +649,52 @@
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="310" y="-28"/>
+								<AbsDimension x="160" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentPrimarySpecLabel" text="Spec 1" inherits="GameFontNormalSmall" justifyH="LEFT">
+				<FontString name="$parentPrimarySpecLabel" text="TELLMEWHEN_SPEC1" inherits="GameFontNormalSmall" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="400" y="-28"/>
+								<AbsDimension x="220" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentSecondarySpecLabel" text="Spec 2" inherits="GameFontNormalSmall" justifyH="LEFT">
+				<FontString name="$parentSecondarySpecLabel" text="TELLMEWHEN_SPEC2" inherits="GameFontNormalSmall" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="450" y="-28"/>
+								<AbsDimension x="270" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentSpec3Label" text="Spec 3" inherits="GameFontNormalSmall" justifyH="LEFT">
+				<FontString name="$parentSpec3Label" text="TELLMEWHEN_SPEC3" inherits="GameFontNormalSmall" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="480" y="-28"/>
+								<AbsDimension x="307" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
+				<!--FontString name="$parentSpec4Label" text="TELLMEWHEN_SPEC4" inherits="GameFontNormalSmall" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
+							<Offset>
+								<AbsDimension x="355" y="-28"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString> -->
 				<FontString name="$parentResetGroupLabel" text="TELLMEWHEN_UIPANEL_GROUPRESETHEADER" inherits="GameFontNormalSmall" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="550" y="-28"/>
+								<AbsDimension x="540" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -737,12 +774,12 @@
 			</Frame>
 			<Button name="$parentLockUnlockButton" inherits="UIPanelButtonTemplate">
 				<Size>
-					<AbsDimension x="100" y="22"/>
+					<AbsDimension x="110" y="22"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x="20" y="50"/>
+							<AbsDimension x="10" y="70"/>
 						</Offset>
 					</Anchor>
 				</Anchors>

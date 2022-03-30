@@ -12,7 +12,7 @@
 -- ADDON GLOBALS
 -- -------------
 
- local LBF
+local LBF
 
 TellMeWhen = {};
 
@@ -45,9 +45,10 @@ TellMeWhen_Group_Defaults = {
 	Columns			= 4,
 	Icons			= {},
 	OnlyInCombat	= false,
-	Spec1   		= true,
-	Spec2       	= true,
-    Spec3           = true,
+	Spec1			= true,
+	Spec2			= true,
+	Spec3			= true,
+	--Spec4			= true,
 	LBFGroup		= false,
 };
 
@@ -56,9 +57,9 @@ for iconID = 1, TELLMEWHEN_MAXROWS*TELLMEWHEN_MAXROWS do
 end;
 
 TellMeWhen_Defaults = {
-	Version 		= 	TELLMEWHEN_VERSION,
-	Locked 			= 	false,
-	Groups 			= 	{},
+	Version 		= TELLMEWHEN_VERSION,
+	Locked 			= false,
+	Groups 			= {},
 };
 
 for groupID = 1, TELLMEWHEN_MAXGROUPS do
@@ -151,9 +152,9 @@ function TellMeWhen_SafeUpgrade()
 				--  end copy frame positions
 			end
 
-            for i = 1, 3 do
-                TellMeWhen_Settings["Groups"][groupID]["Spec"..i] = false
-            end
+			for i = 1, 3 do
+				TellMeWhen_Settings["Groups"][groupID]["Spec"..i] = false
+			end
 
 			if (oldgroupSettings) then
 				TellMeWhen_Settings["Groups"][groupID]["Enabled"] = oldgroupSettings.Enabled;
@@ -275,7 +276,7 @@ function TellMeWhen_Group_Update(groupID)
 	local columns = TellMeWhen_Settings["Groups"][groupID]["Columns"];
 	local onlyInCombat = TellMeWhen_Settings["Groups"][groupID]["OnlyInCombat"];
 
-    genabled = TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec]
+	genabled = TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec]
 
 	if (genabled) then
 		for row = 1, rows do
@@ -602,7 +603,7 @@ function TellMeWhen_Icon_StatusCheck(icon, iconType)
 	end
 end
 
-function TellMeWhen_Icon_SpellCooldown_OnEvent(self)
+function TellMeWhen_Icon_SpellCooldown_OnEvent(self, ...)
 	local startTime, timeLeft, _ = GetSpellCooldown(TellMeWhen_GetSpellNames(self.Name,1));
 	if ( timeLeft ) then
 		CooldownFrame_SetTimer(self.Cooldown, startTime, timeLeft, 1);

@@ -1,11 +1,8 @@
-
 TELLMEWHEN_CMD_RESET = "reset";
 TELLMEWHEN_CMD_OPTIONS = "options";
 
 TELLMEWHEN_ICON_TOOLTIP1 = "TellMeWhen";
 TELLMEWHEN_ICON_TOOLTIP2 = "Right click for icon options. More options in Blizzard interface options menu. Type /tellmewhen to lock and enable addon.";
-
-TELLMEWHEN_RESIZE = "Resize";
 TELLMEWHEN_RESIZE_TOOLTIP = "Click and drag to change size";
 
 TELLMEWHEN_ICONMENU_CHOOSENAME = "Choose spell/item/buff/etc.";
@@ -17,8 +14,9 @@ TELLMEWHEN_ICONMENU_COOLDOWN = "Cooldown";
 TELLMEWHEN_ICONMENU_BUFFDEBUFF = "Buff/Debuff";
 TELLMEWHEN_ICONMENU_REACTIVE = "Reactive spell or ability";
 TELLMEWHEN_ICONMENU_WPNENCHANT = "Temporary weapon enchant";
+TELLMEWHEN_ICONMENU_TOTEM = "Totem";
 
-TELLMEWHEN_ICONMENU_OPTIONS = "More options";
+--TELLMEWHEN_ICONMENU_OPTIONS = "More options";
 
 TELLMEWHEN_ICONMENU_COOLDOWNTYPE = "Cooldown type";
 TELLMEWHEN_ICONMENU_SPELL = "Spell or ability";
@@ -48,23 +46,26 @@ TELLMEWHEN_ICONMENU_SHOWTIMER = "Show timer";
 TELLMEWHEN_ICONMENU_WPNENCHANTTYPE = "Weapon slot to monitor";
 TELLMEWHEN_ICONMENU_MAINHAND = "Mainhand";
 TELLMEWHEN_ICONMENU_OFFHAND = "Offhand";
---	TELLMEWHEN_ICONMENU_WPNSHOWWHEN = "Show when enchant";
 
 TELLMEWHEN_ICONMENU_CLEAR = "Clear settings";
+TELLMEWHEN_GROUP = "Group "
+TELLMEWHEN_RESET = " position reset."
 
 TELLMEWHEN_UIPANEL_SUBTEXT1 = "These options allow you to change the number, arrangement, and behavior of reminder icons.";
-TELLMEWHEN_UIPANEL_SUBTEXT2 = "Icons work when locked. When unlocked, you can move/size icon groups and right click individual icons for more settings. You can also type '/tellmewhen' or '/tmw' to lock/unlock.";
 TELLMEWHEN_UIPANEL_ICONGROUP = "Icon group ";
 TELLMEWHEN_UIPANEL_ROWS = "Rows";
 TELLMEWHEN_UIPANEL_COLUMNS = "Columns";
 TELLMEWHEN_UIPANEL_ONLYINCOMBAT = "Only show in combat";
-TELLMEWHEN_UIPANEL_PRIMARYSPEC = "Primary Spec";
-TELLMEWHEN_UIPANEL_SECONDARYSPEC = "Secondary Spec";
+TELLMEWHEN_SPEC1 = "Spec 1"
+TELLMEWHEN_SPEC2 = "Spec 2"
+TELLMEWHEN_SPEC3 = "Spec 3"
 TELLMEWHEN_UIPANEL_LOCK = "Lock AddOn";
 TELLMEWHEN_UIPANEL_UNLOCK = "Unlock AddOn";
 TELLMEWHEN_UIPANEL_TOOLTIP_ENABLEGROUP = "Show and enable this group of icons";
 TELLMEWHEN_UIPANEL_TOOLTIP_ROWS = "Set the number of icon rows in this group";
 TELLMEWHEN_UIPANEL_TOOLTIP_COLUMNS = "Set the number of icon columns in this group";
 TELLMEWHEN_UIPANEL_TOOLTIP_ONLYINCOMBAT = "Check to only show this group of icons while in combat";
-TELLMEWHEN_UIPANEL_TOOLTIP_PRIMARYSPEC = "Check to show this group of icons while in primary spec";
-TELLMEWHEN_UIPANEL_TOOLTIP_SECONDARYSPEC = "Check to show this group of icons while in secondary spec";
+TELLMEWHEN_UIPANEL_TOOLTIP_SPEC1 = "Check to show this group of icons while in 1 spec";
+TELLMEWHEN_UIPANEL_TOOLTIP_SPEC2 = "Check to show this group of icons while in 2 spec";
+TELLMEWHEN_UIPANEL_TOOLTIP_SPEC3 = "Check to show this group of icons while in 3 spec";
+TELLMEWHEN_UIPANEL_SUBTEXT2 = "Icons work when locked. When unlocked, you can move/size icon groups and right click individual icons for more settings. You can also type '/tellmewhen' or '/tmw' to lock/unlock.";

@@ -443,7 +443,7 @@
 					</OnShow>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC1, nil, nil, nil, nil, 1);
+						GameTooltip:SetText("Выберите для показа иконок в 1 спеке", nil, nil, nil, nil, 1);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
@@ -471,7 +471,7 @@
 					</OnShow>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC2, nil, nil, nil, nil, 1);
+						GameTooltip:SetText("Выберите для показа иконок в 2 спеке", nil, nil, nil, nil, 1);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
@@ -499,35 +499,7 @@
 					</OnShow>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC3, nil, nil, nil, nil, 1);
-					</OnEnter>
-					<OnLeave>
-						GameTooltip:Hide();
-					</OnLeave>
-					<OnClick>
-						PlaySound("igMainMenuOptionCheckBoxOn");
-						TellMeWhen_SpecButton_OnClick(self);
-					</OnClick>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="$parentSpec4Button" inherits="UICheckButtonTemplate" id="4">
-				<Size>
-					<AbsDimension x="25" y="25"/>
-				</Size>
-				<Anchors>
-					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
-						<Offset>
-							<AbsDimension x="345" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnShow>
-						TellMeWhen_SpecButton_Update(self);
-					</OnShow>
-					<OnEnter>
-						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC4, nil, nil, nil, nil, 1);
+						GameTooltip:SetText("Выберите для показа иконок в 3 спеке", nil, nil, nil, nil, 1);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();

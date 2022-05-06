@@ -30,7 +30,7 @@ function TellMeWhen_GroupPositionReset_OnClick(self)
 	end
 	local group = getglobal("TellMeWhen_Group"..groupID);
 	group:SetPoint("CENTER", "WorldFrame", "CENTER");
-	group["Scale"] = 2.0
+	group["Scale"] = 1.5
 	TellMeWhen_Group_Update(groupID);
 	if ( locked ) then
 		TellMeWhen_Settings["Locked"] = true;
@@ -162,7 +162,7 @@ function TellMeWhen_UIPanelUpdate()
 		TellMeWhen_RowColumnsWidget_Update(rowsWidget, "Rows");
 		TellMeWhen_OnlyInCombatButton_Update(onlyInCombatButton);
 
-		for i = 1, 3 do
+		for i = 1, 4 do
 			local button = _G[uIPanel:GetName().."Group"..groupID.."Spec"..i.."Button"]
 
 			if button then

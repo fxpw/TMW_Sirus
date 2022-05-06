@@ -521,7 +521,7 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<!--Scripts>
+				<Scripts>
 					<OnShow>
 						TellMeWhen_SpecButton_Update(self);
 					</OnShow>
@@ -536,7 +536,7 @@
 						PlaySound("igMainMenuOptionCheckBoxOn");
 						TellMeWhen_SpecButton_OnClick(self);
 					</OnClick>
-				</Scripts> -->
+				</Scripts>
 			</CheckButton>
 			<Button name="$parentGroupResetButton" text="TELLMEWHEN_UIPANEL_GROUPRESET" inherits="UIPanelButtonTemplate" >
 				<Size>
@@ -681,7 +681,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<!--FontString name="$parentSpec4Label" text="TELLMEWHEN_SPEC4" inherits="GameFontNormalSmall" justifyH="LEFT">
+				<FontString name="$parentSpec4Label" text="TELLMEWHEN_SPEC4" inherits="GameFontNormalSmall" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
@@ -689,7 +689,7 @@
 							</Offset>
 						</Anchor>
 					</Anchors>
-				</FontString> -->
+				</FontString>
 				<FontString name="$parentResetGroupLabel" text="TELLMEWHEN_UIPANEL_GROUPRESETHEADER" inherits="GameFontNormalSmall" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">

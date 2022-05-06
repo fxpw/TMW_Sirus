@@ -3,9 +3,10 @@
 #
 ## Interface: 30300
 ## Title: TellMeWhen
-## Version: 1.2.5
-## Author: Banjankri of Blackrock
+## Version: 1.2.7
+## Author: Banjankri of Blackrock, Master-f1
 ## Notes: Notifications about cooldowns, buffs, etc.
+## Notes-ruRU: Отслеживание кулдаунов, бафов, заклинаний и т.д.
 ## OptionalDeps: LibStub,ButtonFacade
 ## SavedVariablesPerCharacter: TellMeWhen_Settings
 ## X-Embeds: LibStub

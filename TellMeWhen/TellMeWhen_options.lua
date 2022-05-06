@@ -30,13 +30,13 @@ function TellMeWhen_GroupPositionReset_OnClick(self)
 	end
 	local group = getglobal("TellMeWhen_Group"..groupID);
 	group:SetPoint("CENTER", "WorldFrame", "CENTER");
-	group["Scale"] = 2.0
+	group["Scale"] = 1.5
 	TellMeWhen_Group_Update(groupID);
 	if ( locked ) then
 		TellMeWhen_Settings["Locked"] = true;
 		TellMeWhen_Group_Update(groupID);
 	end
-	DEFAULT_CHAT_FRAME:AddMessage("TellMeWhen Group "..groupID.." position reset.");
+	DEFAULT_CHAT_FRAME:AddMessage("TellMeWhen "..TELLMEWHEN_GROUP..groupID..TELLMEWHEN_RESET);
 end
 
 function TellMeWhen_GroupEnableButton_OnClick(self)
@@ -162,7 +162,7 @@ function TellMeWhen_UIPanelUpdate()
 		TellMeWhen_RowColumnsWidget_Update(rowsWidget, "Rows");
 		TellMeWhen_OnlyInCombatButton_Update(onlyInCombatButton);
 
-		for i = 1, 3 do
+		for i = 1, 4 do
 			local button = _G[uIPanel:GetName().."Group"..groupID.."Spec"..i.."Button"]
 
 			if button then
@@ -257,19 +257,19 @@ TellMeWhen_IconMenu_TotemOptions = {
 TellMeWhen_IconMenu_SubMenus = {
 	-- the keys on this table need to match the settings variable names
 	Type = {
-	  	{ Setting = "cooldown", MenuText = TELLMEWHEN_ICONMENU_COOLDOWN },
-	  	{ Setting = "buff", MenuText = TELLMEWHEN_ICONMENU_BUFFDEBUFF },
-	  	{ Setting = "reactive", MenuText = TELLMEWHEN_ICONMENU_REACTIVE },
-	  	{ Setting = "wpnenchant", MenuText = TELLMEWHEN_ICONMENU_WPNENCHANT },
+		{ Setting = "cooldown", MenuText = TELLMEWHEN_ICONMENU_COOLDOWN },
+		{ Setting = "buff", MenuText = TELLMEWHEN_ICONMENU_BUFFDEBUFF },
+		{ Setting = "reactive", MenuText = TELLMEWHEN_ICONMENU_REACTIVE },
+		{ Setting = "wpnenchant", MenuText = TELLMEWHEN_ICONMENU_WPNENCHANT },
 		{ Setting = "totem", MenuText = TELLMEWHEN_ICONMENU_TOTEM },
 	},
 	CooldownType = {
-	  	{ Setting = "spell", MenuText = TELLMEWHEN_ICONMENU_SPELL },
-	  	{ Setting = "item", MenuText = TELLMEWHEN_ICONMENU_ITEM },
+		{ Setting = "spell", MenuText = TELLMEWHEN_ICONMENU_SPELL },
+		{ Setting = "item", MenuText = TELLMEWHEN_ICONMENU_ITEM },
 	},
 	BuffOrDebuff = {
-	  	{ Setting = "HELPFUL", MenuText = TELLMEWHEN_ICONMENU_BUFF },
-	  	{ Setting = "HARMFUL", MenuText = TELLMEWHEN_ICONMENU_DEBUFF },
+		{ Setting = "HELPFUL", MenuText = TELLMEWHEN_ICONMENU_BUFF },
+		{ Setting = "HARMFUL", MenuText = TELLMEWHEN_ICONMENU_DEBUFF },
 	},
 	Unit = {
 		{ Setting = "player", MenuText = TELLMEWHEN_ICONMENU_PLAYER },
@@ -281,18 +281,18 @@ TellMeWhen_IconMenu_SubMenus = {
 		{ Setting = "pettarget", MenuText = TELLMEWHEN_ICONMENU_PETTARGET },
 	},
 	BuffShowWhen = {
-	  	{ Setting = "present", MenuText = TELLMEWHEN_ICONMENU_PRESENT },
-	  	{ Setting = "absent", MenuText = TELLMEWHEN_ICONMENU_ABSENT },
-	  	{ Setting = "always", MenuText = TELLMEWHEN_ICONMENU_ALWAYS },
+		{ Setting = "present", MenuText = TELLMEWHEN_ICONMENU_PRESENT },
+		{ Setting = "absent", MenuText = TELLMEWHEN_ICONMENU_ABSENT },
+		{ Setting = "always", MenuText = TELLMEWHEN_ICONMENU_ALWAYS },
 	},
 	CooldownShowWhen = {
-	  	{ Setting = "usable", MenuText = TELLMEWHEN_ICONMENU_USABLE },
-	  	{ Setting = "unusable", MenuText = TELLMEWHEN_ICONMENU_UNUSABLE },
-	  	{ Setting = "always", MenuText = TELLMEWHEN_ICONMENU_ALWAYS },
+		{ Setting = "usable", MenuText = TELLMEWHEN_ICONMENU_USABLE },
+		{ Setting = "unusable", MenuText = TELLMEWHEN_ICONMENU_UNUSABLE },
+		{ Setting = "always", MenuText = TELLMEWHEN_ICONMENU_ALWAYS },
 	},
 	WpnEnchantType = {
-	  	{ Setting = "mainhand", MenuText = TELLMEWHEN_ICONMENU_MAINHAND },
-	  	{ Setting = "offhand", MenuText = TELLMEWHEN_ICONMENU_OFFHAND },
+		{ Setting = "mainhand", MenuText = TELLMEWHEN_ICONMENU_MAINHAND },
+		{ Setting = "offhand", MenuText = TELLMEWHEN_ICONMENU_OFFHAND },
 	},
 };
 
@@ -408,7 +408,7 @@ function TellMeWhen_IconMenu_Initialize()
 
 	else
 		info = UIDropDownMenu_CreateInfo();
-		info.text = TELLMEWHEN_ICONMENU_OPTIONS;
+		--info.text = TELLMEWHEN_ICONMENU_OPTIONS;
 		info.disabled = true;
 		UIDropDownMenu_AddButton(info);
 	end
@@ -499,8 +499,8 @@ function TellMeWhen_SizeUpdate(self)
 	local cursorX, cursorY = GetCursorPosition(UIParent);
 
 	-- calculate new scale
-	local newXScale = scalingFrame.oldScale * (cursorX/uiScale - scalingFrame.oldX*scalingFrame.oldScale) / (self.oldCursorX/uiScale - scalingFrame.oldX*scalingFrame.oldScale) ;
-	local newYScale = scalingFrame.oldScale * (cursorY/uiScale - scalingFrame.oldY*scalingFrame.oldScale) / (self.oldCursorY/uiScale - scalingFrame.oldY*scalingFrame.oldScale) ;
+	local newXScale = scalingFrame.oldScale * (cursorX/uiScale - scalingFrame.oldX*scalingFrame.oldScale) / (self.oldCursorX/uiScale - scalingFrame.oldX*scalingFrame.oldScale);
+	local newYScale = scalingFrame.oldScale * (cursorY/uiScale - scalingFrame.oldY*scalingFrame.oldScale) / (self.oldCursorY/uiScale - scalingFrame.oldY*scalingFrame.oldScale);
 	local newScale = max(0.6, newXScale, newYScale);
 	scalingFrame:SetScale(newScale);
 

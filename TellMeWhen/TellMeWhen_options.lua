@@ -29,24 +29,14 @@ function TellMeWhen_GroupPositionReset_OnClick(self)
 		TellMeWhen_Group_Update(groupID);
 	end
 	local group = getglobal("TellMeWhen_Group"..groupID);
-	group:SetPoint("CENTER", "WorldFrame", "CENTER");
-	group["Scale"] = 1.5
+	TellMeWhen_Settings["Groups"][groupID]["Scale"] = 1.5
+	group:SetPoint("TOPLEFT", "UIParent", "TOPLEFT", 100, -50 - 30*groupID);
 	TellMeWhen_Group_Update(groupID);
 	if ( locked ) then
 		TellMeWhen_Settings["Locked"] = true;
 		TellMeWhen_Group_Update(groupID);
 	end
 	DEFAULT_CHAT_FRAME:AddMessage("TellMeWhen "..TELLMEWHEN_GROUP..groupID..TELLMEWHEN_RESET);
-end
-
-function TellMeWhen_GroupEnableButton_OnClick(self)
-	local groupID = self:GetParent():GetID();
-	if ( self:GetChecked() ) then
-		TellMeWhen_Settings["Groups"][groupID]["Enabled"] = true;
-	else
-		TellMeWhen_Settings["Groups"][groupID]["Enabled"] = false;
-	end
-	TellMeWhen_Group_Update(groupID);
 end
 
 function TellMeWhen_GroupEnableButton_Update(self)
@@ -88,7 +78,8 @@ function TellMeWhen_OnlyInCombatButton_Update(self)
 end
 
 function TellMeWhen_SpecButton_Update(self)
-	self:SetChecked(TellMeWhen_Settings["Groups"][self:GetParent():GetID()]["Spec"..self:GetID()]);
+	local aSpec = C_Talent.GetActiveTalentGroup()
+	self:SetChecked(TellMeWhen_Settings["Groups"][self:GetParent():GetID()]["Spec"..aSpec]);
 end
 
 function TellMeWhen_OnlyInCombatButton_OnClick(self)
@@ -103,10 +94,11 @@ end
 
 function TellMeWhen_SpecButton_OnClick(self)
 	local groupID = self:GetParent():GetID();
+	local aSpec = C_Talent.GetActiveTalentGroup()
 	if ( self:GetChecked() ) then
-		TellMeWhen_Settings["Groups"][groupID]["Spec"..self:GetID()] = true;
+		TellMeWhen_Settings["Groups"][groupID]["Spec"..aSpec] = true;
 	else
-		TellMeWhen_Settings["Groups"][groupID]["Spec"..self:GetID()] = false;
+		TellMeWhen_Settings["Groups"][groupID]["Spec"..aSpec] = false;
 	end
 	TellMeWhen_Group_Update(groupID);
 end
@@ -131,25 +123,6 @@ function TellMeWhen_LockToggle()
 	TellMeWhen_Update();
 end
 
-function TellMeWhen_Reset()
-	TellMeWhen_Settings = CopyTable(TellMeWhen_Defaults);
-	for groupID = 1, TELLMEWHEN_MAXGROUPS do
-		local group = getglobal("TellMeWhen_Group"..groupID);
-		group:ClearAllPoints();
-		group:SetPoint("TOPLEFT", "UIParent", "TOPLEFT", 100, -50 - 30*groupID);
-		TellMeWhen_Settings["Groups"][groupID]["Enabled"] = false;
-	end
-	TellMeWhen_Settings["Groups"][1]["Enabled"] = true;
-	TellMeWhen_Update();			-- default setting is unlocked?
-	TellMeWhen_UIPanelUpdate();
-	DEFAULT_CHAT_FRAME:AddMessage("[TellMeWhen]: Groups have been Reset");
-end
-
-function TellMeWhen_ShowConfig()
-	local uIPanel = getglobal("InterfaceOptionsTellMeWhenPanel");
-	InterfaceOptionsFrame_OpenToCategory(uIPanel);
-end
-
 function TellMeWhen_UIPanelUpdate()
 	local uIPanel = getglobal("InterfaceOptionsTellMeWhenPanel");
 	for groupID = 1, TELLMEWHEN_MAXGROUPS do
@@ -161,8 +134,8 @@ function TellMeWhen_UIPanelUpdate()
 		TellMeWhen_RowColumnsWidget_Update(columnsWidget, "Columns");
 		TellMeWhen_RowColumnsWidget_Update(rowsWidget, "Rows");
 		TellMeWhen_OnlyInCombatButton_Update(onlyInCombatButton);
-
-		for i = 1, 4 do
+		local maxSpecs = C_Talent.GetNumTalentGroups()
+		for i = 1, maxSpecs do
 			local button = _G[uIPanel:GetName().."Group"..groupID.."Spec"..i.."Button"]
 
 			if button then
@@ -172,6 +145,25 @@ function TellMeWhen_UIPanelUpdate()
 	end
 	lockUnlockButton = getglobal("InterfaceOptionsTellMeWhenPanelLockUnlockButton");
 	TellMeWhen_LockUnlockButton_Update(lockUnlockButton);
+end
+
+function TellMeWhen_Reset()
+	TellMeWhen_Settings = CopyTable(TellMeWhen_Defaults);
+	DEFAULT_CHAT_FRAME:AddMessage("TellMeWhen "..TELLMEWHEN_RESETGR);
+	for groupID = 1, TELLMEWHEN_MAXGROUPS do
+		local group = getglobal("TellMeWhen_Group"..groupID);
+		group:ClearAllPoints();
+		group:SetPoint("TOPLEFT", "UIParent", "TOPLEFT", 100, -50 - 30*groupID);
+		TellMeWhen_Settings["Groups"][groupID]["Enabled"] = false;
+	end
+	TellMeWhen_Settings["Groups"][1]["Enabled"] = true;
+	TellMeWhen_Update();			-- default setting is unlocked?
+	TellMeWhen_UIPanelUpdate();
+end
+
+function TellMeWhen_ShowConfig()
+	local uIPanel = getglobal("InterfaceOptionsTellMeWhenPanel");
+	InterfaceOptionsFrame_OpenToCategory(uIPanel);
 end
 
 function TellMeWhen_Cancel()
@@ -408,7 +400,6 @@ function TellMeWhen_IconMenu_Initialize()
 
 	else
 		info = UIDropDownMenu_CreateInfo();
-		--info.text = TELLMEWHEN_ICONMENU_OPTIONS;
 		info.disabled = true;
 		UIDropDownMenu_AddButton(info);
 	end

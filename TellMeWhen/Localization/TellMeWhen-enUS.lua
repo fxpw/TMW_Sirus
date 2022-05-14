@@ -16,8 +16,6 @@ TELLMEWHEN_ICONMENU_REACTIVE = "Reactive spell or ability";
 TELLMEWHEN_ICONMENU_WPNENCHANT = "Temporary weapon enchant";
 TELLMEWHEN_ICONMENU_TOTEM = "Totem";
 
---TELLMEWHEN_ICONMENU_OPTIONS = "More options";
-
 TELLMEWHEN_ICONMENU_COOLDOWNTYPE = "Cooldown type";
 TELLMEWHEN_ICONMENU_SPELL = "Spell or ability";
 TELLMEWHEN_ICONMENU_ITEM = "Item";
@@ -50,22 +48,17 @@ TELLMEWHEN_ICONMENU_OFFHAND = "Offhand";
 TELLMEWHEN_ICONMENU_CLEAR = "Clear settings";
 TELLMEWHEN_GROUP = "Group "
 TELLMEWHEN_RESET = " position reset."
+TELLMEWHEN_RESETGR = "Groups have been Reset."
 
 TELLMEWHEN_UIPANEL_SUBTEXT1 = "These options allow you to change the number, arrangement, and behavior of reminder icons.";
-TELLMEWHEN_UIPANEL_ICONGROUP = "Icon group ";
 TELLMEWHEN_UIPANEL_ROWS = "Rows";
 TELLMEWHEN_UIPANEL_COLUMNS = "Columns";
 TELLMEWHEN_UIPANEL_ONLYINCOMBAT = "Only show in combat";
-TELLMEWHEN_SPEC1 = "Spec 1"
-TELLMEWHEN_SPEC2 = "Spec 2"
-TELLMEWHEN_SPEC3 = "Spec 3"
+TELLMEWHEN_PANEL = "Panels"
 TELLMEWHEN_UIPANEL_LOCK = "Lock AddOn";
 TELLMEWHEN_UIPANEL_UNLOCK = "Unlock AddOn";
-TELLMEWHEN_UIPANEL_TOOLTIP_ENABLEGROUP = "Show and enable this group of icons";
 TELLMEWHEN_UIPANEL_TOOLTIP_ROWS = "Set the number of icon rows in this group";
 TELLMEWHEN_UIPANEL_TOOLTIP_COLUMNS = "Set the number of icon columns in this group";
 TELLMEWHEN_UIPANEL_TOOLTIP_ONLYINCOMBAT = "Check to only show this group of icons while in combat";
-TELLMEWHEN_UIPANEL_TOOLTIP_SPEC1 = "Check to show this group of icons while in 1 spec";
-TELLMEWHEN_UIPANEL_TOOLTIP_SPEC2 = "Check to show this group of icons while in 2 spec";
-TELLMEWHEN_UIPANEL_TOOLTIP_SPEC3 = "Check to show this group of icons while in 3 spec";
+TELLMEWHEN_UIPANEL_TOOLTIP_PANEL = "Check to show this group of icons";
 TELLMEWHEN_UIPANEL_SUBTEXT2 = "Icons work when locked. When unlocked, you can move/size icon groups and right click individual icons for more settings. You can also type '/tellmewhen' or '/tmw' to lock/unlock.";

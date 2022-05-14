@@ -6,14 +6,6 @@
 -- Banjankri of Blackrock
 -- Predeter of Proudmoore
 -- --------------------
---[[
-TELLMEWHEN_VERSION
-TellMeWhen_SafeUpgrade
-
-
-
-
-]]
 
 -- -------------
 -- ADDON GLOBALS
@@ -23,7 +15,9 @@ local LBF
 
 TellMeWhen = {};
 
-TELLMEWHEN_VERSION = "1.2.8";
+TELLMEWHEN_maxSpecs = C_Talent.GetNumTalentGroups()
+TELLMEWHEN_VERSION = "1.2.9";
+
 TELLMEWHEN_MAXGROUPS = 8;
 TELLMEWHEN_MAXROWS = 7;
 TELLMEWHEN_ICONSPACING = 0;
@@ -44,7 +38,6 @@ TellMeWhen_Icon_Defaults = {
 };
 
 
-
 TellMeWhen_Group_Defaults = {
 	Enabled			= false,
 	Scale			= 1.5,
@@ -52,10 +45,6 @@ TellMeWhen_Group_Defaults = {
 	Columns			= 4,
 	Icons			= {},
 	OnlyInCombat	= false,
-	Spec1			= true,
-	Spec2			= true,
-	Spec3			= true,
-	Spec4			= false,
 	LBFGroup		= false,
 };
 
@@ -129,31 +118,6 @@ function TellMeWhen_OnEvent(self, event)
 	end
 end
 
-function TellMeWhen_AddNewSettings(settings, defaults)
-	for k, v in pairs(defaults) do
-		if ( not settings[k] ) then
-			if ( type(v) == "table" ) then
-				settings[k] = {};
-				settings[k] = TellMeWhen_AddNewSettings(settings[k], defaults[k]);
-			else
-				settings[k] = v;
-			end
-
-		--[[
-		elseif ( type(v) == "table" ) and ( type(settings[k]) ~= "table" ) then
-			local oldSetting = settings[k];
-			settings[k] = {};
-			settings[k][1] = oldSetting;
-			--	settings[k] = {settings[k]};
-		--]]
-
-		elseif ( type(v) == "table" ) then
-			settings[k] = TellMeWhen_AddNewSettings(settings[k], defaults[k]);
-		end
-	end
-	return settings;
-end
-
 function TellMeWhen_Update()
 	for groupID = 1, TELLMEWHEN_MAXGROUPS do
 		TellMeWhen_Group_Update(groupID);
@@ -220,10 +184,6 @@ function TellMeWhen_Group_Update(groupID)
 				if ( not genabled ) then
 					TellMeWhen_Icon_ClearScripts(icon);
 				end
-				--this addes LibButtonFacade support I hope.
---~ 				if LBF then
---~ 					LBF:Group("TellMeWhen",groupName):AddButton(_G[iconName]);
---~ 				end
 			end
 		end
 		for iconID = rows*columns+1, TELLMEWHEN_MAXROWS*TELLMEWHEN_MAXROWS do

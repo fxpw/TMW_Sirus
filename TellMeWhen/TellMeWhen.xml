@@ -229,31 +229,6 @@
 			<AbsDimension x="14" y="20"/>
 		</Size>
 		<Frames>
-			<!-- <CheckButton name="$parentEnableButton" inherits="InterfaceOptionsCheckButtonTemplate">
-				<Anchors>
-					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT" />
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						local text = getglobal(self:GetName().."Text");
-						text:SetText(TELLMEWHEN_UIPANEL_ICONGROUP..self:GetParent():GetID());
-					</OnLoad>
-					<OnShow>
-						TellMeWhen_GroupEnableButton_Update(self);
-					</OnShow>
-					<OnEnter>
-						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_ENABLEGROUP, nil, nil, nil, nil, 1);
-					</OnEnter>
-					<OnLeave>
-						GameTooltip:Hide();
-					</OnLeave>
-					<OnClick>
-						PlaySound("igMainMenuOptionCheckBoxOn");
-						TellMeWhen_GroupEnableButton_OnClick(self);
-					</OnClick>
-				</Scripts>
-			</CheckButton> -->
 			<Frame name="$parentColumnsWidget">
 				<Size>
 					<AbsDimension x="64" y="32"/>
@@ -261,7 +236,7 @@
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
 						<Offset>
-							<AbsDimension x="20" y="0"/>
+							<AbsDimension x="40" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -333,7 +308,7 @@
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
 						<Offset>
-							<AbsDimension x="90" y="0"/>
+							<AbsDimension x="110" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -405,7 +380,7 @@
 				<Anchors>
 					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 						<Offset>
-							<AbsDimension x="140" y="0"/>
+							<AbsDimension x="160" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -433,7 +408,7 @@
 				<Anchors>
 					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 					<Offset>
-						<AbsDimension x="195" y="0"/>
+						<AbsDimension x="215" y="0"/>
 					</Offset>
 					</Anchor>
 				</Anchors>
@@ -443,91 +418,7 @@
 					</OnShow>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC1, nil, nil, nil, nil, 1);
-					</OnEnter>
-					<OnLeave>
-						GameTooltip:Hide();
-					</OnLeave>
-					<OnClick>
-						PlaySound("igMainMenuOptionCheckBoxOn");
-						TellMeWhen_SpecButton_OnClick(self);
-					</OnClick>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="$parentSpec2Button" inherits="UICheckButtonTemplate" id="2">
-				<Size>
-					<AbsDimension x="25" y="25"/>
-				</Size>
-				<Anchors>
-					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
-						<Offset>
-							<AbsDimension x="245" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnShow>
-						TellMeWhen_SpecButton_Update(self);
-					</OnShow>
-					<OnEnter>
-						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC2, nil, nil, nil, nil, 1);
-					</OnEnter>
-					<OnLeave>
-						GameTooltip:Hide();
-					</OnLeave>
-					<OnClick>
-						PlaySound("igMainMenuOptionCheckBoxOn");
-						TellMeWhen_SpecButton_OnClick(self);
-					</OnClick>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="$parentSpec3Button" inherits="UICheckButtonTemplate" id="3">
-				<Size>
-					<AbsDimension x="25" y="25"/>
-				</Size>
-				<Anchors>
-					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
-						<Offset>
-							<AbsDimension x="295" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnShow>
-						TellMeWhen_SpecButton_Update(self);
-					</OnShow>
-					<OnEnter>
-						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC3, nil, nil, nil, nil, 1);
-					</OnEnter>
-					<OnLeave>
-						GameTooltip:Hide();
-					</OnLeave>
-					<OnClick>
-						PlaySound("igMainMenuOptionCheckBoxOn");
-						TellMeWhen_SpecButton_OnClick(self);
-					</OnClick>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="$parentSpec4Button" inherits="UICheckButtonTemplate" id="4">
-				<Size>
-					<AbsDimension x="25" y="25"/>
-				</Size>
-				<Anchors>
-					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
-						<Offset>
-							<AbsDimension x="345" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnShow>
-						TellMeWhen_SpecButton_Update(self);
-					</OnShow>
-					<OnEnter>
-						GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT");
-						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_SPEC4, nil, nil, nil, nil, 1);
+						GameTooltip:SetText(TELLMEWHEN_UIPANEL_TOOLTIP_PANEL, nil, nil, nil, nil, 1);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
@@ -540,12 +431,12 @@
 			</CheckButton>
 			<Button name="$parentGroupResetButton" text="TELLMEWHEN_UIPANEL_GROUPRESET" inherits="UIPanelButtonTemplate" >
 				<Size>
-					<AbsDimension x="80" y="30"/>
+					<AbsDimension x="60" y="25"/>
 				</Size>
 				<Anchors>
 					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 						<Offset>
-							<AbsDimension x="500" y="0"/>
+							<AbsDimension x="280" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -617,7 +508,7 @@
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="128" y="70"/>
+								<AbsDimension x="128" y="200"/>
 							</Offset>
 						</Anchor>
 						<Anchor point="RIGHT">
@@ -631,7 +522,7 @@
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="20" y="-28"/>
+								<AbsDimension x="40" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -640,7 +531,7 @@
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="90" y="-28"/>
+								<AbsDimension x="110" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -649,43 +540,16 @@
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="160" y="-28"/>
+								<AbsDimension x="185" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentPrimarySpecLabel" text="TELLMEWHEN_SPEC1" inherits="GameFontNormalSmall" justifyH="LEFT">
+				<FontString name="$parentPrimarySpecLabel" text="TELLMEWHEN_PANEL" inherits="GameFontNormalSmall" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="220" y="-28"/>
-							</Offset>
-						</Anchor>
-					</Anchors>
-				</FontString>
-				<FontString name="$parentSecondarySpecLabel" text="TELLMEWHEN_SPEC2" inherits="GameFontNormalSmall" justifyH="LEFT">
-					<Anchors>
-						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
-							<Offset>
-								<AbsDimension x="270" y="-28"/>
-							</Offset>
-						</Anchor>
-					</Anchors>
-				</FontString>
-				<FontString name="$parentSpec3Label" text="TELLMEWHEN_SPEC3" inherits="GameFontNormalSmall" justifyH="LEFT">
-					<Anchors>
-						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
-							<Offset>
-								<AbsDimension x="307" y="-28"/>
-							</Offset>
-						</Anchor>
-					</Anchors>
-				</FontString>
-				<FontString name="$parentSpec4Label" text="TELLMEWHEN_SPEC4" inherits="GameFontNormalSmall" justifyH="LEFT">
-					<Anchors>
-						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
-							<Offset>
-								<AbsDimension x="355" y="-28"/>
+								<AbsDimension x="240" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -694,7 +558,7 @@
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="540" y="-28"/>
+								<AbsDimension x="310" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -709,7 +573,6 @@
 				InterfaceOptions_AddCategory(self);
 				InterfaceOptionsTellMeWhenPanelOnlyInCombatLabel:SetWidth(60);
 				InterfaceOptionsTellMeWhenPanelPrimarySpecLabel:SetWidth(60);
-				InterfaceOptionsTellMeWhenPanelSecondarySpecLabel:SetWidth(60);
 			</OnLoad>
 			<OnShow>
 				TellMeWhen_OldSettings = CopyTable(TellMeWhen_Settings);
@@ -779,7 +642,7 @@
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x="10" y="70"/>
+							<AbsDimension x="10" y="200"/>
 						</Offset>
 					</Anchor>
 				</Anchors>

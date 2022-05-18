@@ -14,10 +14,7 @@
 local LBF
 
 TellMeWhen = {};
-
-TELLMEWHEN_maxSpecs = C_Talent.GetNumTalentGroups()
-TELLMEWHEN_VERSION = "1.2.9";
-
+TELLMEWHEN_VERSION = "1.3.0";
 TELLMEWHEN_MAXGROUPS = 8;
 TELLMEWHEN_MAXROWS = 7;
 TELLMEWHEN_ICONSPACING = 0;
@@ -62,14 +59,6 @@ for groupID = 1, TELLMEWHEN_MAXGROUPS do
 	TellMeWhen_Defaults["Groups"][groupID] = TellMeWhen_Group_Defaults;
 	if (groupID == 1) then
 		TellMeWhen_Defaults["Groups"][groupID].Enabled = true;
-	end
-end
-
-function TellMeWhen_Test(stuff)
-	if ( stuff ) then
-		DEFAULT_CHAT_FRAME:AddMessage("TellMeWhen test: "..stuff);
-	else
-		DEFAULT_CHAT_FRAME:AddMessage("TellMeWhen test: "..this:GetName());
 	end
 end
 
@@ -220,6 +209,10 @@ function TellMeWhen_Group_Update(groupID)
 		else
 			group:Hide();
 		end
+	end
+	
+	if ( not TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec] ) then
+		TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec] = false
 	end
 end
 
@@ -569,7 +562,7 @@ function TellMeWhen_Icon_BuffCheck(icon)
 		if icon.OnlyMine then filter = filter.."|PLAYER" end
 
 		for i, iName in ipairs(auraNames) do
-	--		local buffName, rank, iconTexture, count, debuffType, duration, expirationTime, unitCaster, isStealable;
+			--local buffName, rank, iconTexture, count, debuffType, duration, expirationTime, unitCaster, isStealable;
 			local buffName, _, iconTexture, count, _, duration, expirationTime, unitCaster = UnitAura(icon.Unit, iName, nil, filter);
 			if ( buffName ) then --and expirationTime > maxExpirationTime and ((( unitCaster == "player" ) or ( unitCaster == "pet" ) or ( unitCaster == "vehicle" )) or not icon.OnlyMine) ) then
 				--maxExpirationTime = expirationTime;
@@ -581,9 +574,9 @@ function TellMeWhen_Icon_BuffCheck(icon)
 					icon:SetAlpha(icon.presentAlpha);
 				end
 				icon.texture:SetVertexColor(1, 1, 1, 1);
---~					if ( LBF ) then
---~ 					LBF:SetNormalVertexColor(icon,1,1,1,1);
---~ 				end
+--				if ( LBF ) then
+--					LBF:SetNormalVertexColor(icon,1,1,1,1);
+--				end
 				if ( count > 1 ) then
 					icon.countText:SetText(count);
 					icon.countText:Show();

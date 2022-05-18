@@ -1,11 +1,6 @@
-# Originally by Nephthys of Hyjal
-# Major Updates by Oozebull of Twisting Nether
-#
 ## Interface: 30300
 ## Title: TellMeWhen
-
-## Version: 1.2.9
-
+## Version: 1.3.0
 ## Author: Banjankri of Blackrock, Master-f1
 ## Notes: Notifications about cooldowns, buffs, etc.
 ## Notes-ruRU: Отслеживание кулдаунов, бафов, заклинаний и т.д.

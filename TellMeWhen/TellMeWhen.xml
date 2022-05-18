@@ -455,7 +455,7 @@
 				self.optionsW, self.optionsH = InterfaceOptionsFrame:GetSize()
 			</OnLoad>
 			<OnShow>
-				InterfaceOptionsFrame:SetSize(self.optionsW + 200, self.optionsH)
+				InterfaceOptionsFrame:SetSize(self.optionsW, self.optionsH)
 			</OnShow>
 			<OnHide>
 				InterfaceOptionsFrame:SetSize(self.optionsW, self.optionsH)

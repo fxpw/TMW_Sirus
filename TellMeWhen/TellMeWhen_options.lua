@@ -30,18 +30,13 @@ function TellMeWhen_GroupPositionReset_OnClick(self)
 	end
 	local group = getglobal("TellMeWhen_Group"..groupID);
 	TellMeWhen_Settings["Groups"][groupID]["Scale"] = 1.5
-	group:SetPoint("TOPLEFT", "UIParent", "TOPLEFT", 100, -50 - 30*groupID);
+	group:SetPoint("TOPLEFT", "UIParent", "TOPLEFT", 100, -50 - 50*groupID);
 	TellMeWhen_Group_Update(groupID);
 	if ( locked ) then
 		TellMeWhen_Settings["Locked"] = true;
 		TellMeWhen_Group_Update(groupID);
 	end
 	DEFAULT_CHAT_FRAME:AddMessage("TellMeWhen "..TELLMEWHEN_GROUP..groupID..TELLMEWHEN_RESET);
-end
-
-function TellMeWhen_GroupEnableButton_Update(self)
-	local groupID = self:GetParent():GetID();
-	self:SetChecked(TellMeWhen_Settings["Groups"][groupID]["Enabled"]);
 end
 
 function TellMeWhen_RowColumnsWidget_Update(self, variable)
@@ -126,11 +121,9 @@ end
 function TellMeWhen_UIPanelUpdate()
 	local uIPanel = getglobal("InterfaceOptionsTellMeWhenPanel");
 	for groupID = 1, TELLMEWHEN_MAXGROUPS do
-		local enableButton = getglobal(uIPanel:GetName().."Group"..groupID.."EnableButton");
 		local columnsWidget = getglobal(uIPanel:GetName().."Group"..groupID.."ColumnsWidget");
 		local rowsWidget = getglobal(uIPanel:GetName().."Group"..groupID.."RowsWidget");
 		local onlyInCombatButton = getglobal(uIPanel:GetName().."Group"..groupID.."OnlyInCombatButton");
-		TellMeWhen_GroupEnableButton_Update(enableButton);
 		TellMeWhen_RowColumnsWidget_Update(columnsWidget, "Columns");
 		TellMeWhen_RowColumnsWidget_Update(rowsWidget, "Rows");
 		TellMeWhen_OnlyInCombatButton_Update(onlyInCombatButton);
@@ -149,16 +142,16 @@ end
 
 function TellMeWhen_Reset()
 	TellMeWhen_Settings = CopyTable(TellMeWhen_Defaults);
-	DEFAULT_CHAT_FRAME:AddMessage("TellMeWhen "..TELLMEWHEN_RESETGR);
 	for groupID = 1, TELLMEWHEN_MAXGROUPS do
 		local group = getglobal("TellMeWhen_Group"..groupID);
 		group:ClearAllPoints();
-		group:SetPoint("TOPLEFT", "UIParent", "TOPLEFT", 100, -50 - 30*groupID);
+		group:SetPoint("TOPLEFT", "UIParent", "TOPLEFT", 100, -50 - 50*groupID);
 		TellMeWhen_Settings["Groups"][groupID]["Enabled"] = false;
 	end
 	TellMeWhen_Settings["Groups"][1]["Enabled"] = true;
-	TellMeWhen_Update();			-- default setting is unlocked?
+	TellMeWhen_Update();
 	TellMeWhen_UIPanelUpdate();
+	DEFAULT_CHAT_FRAME:AddMessage("TellMeWhen "..TELLMEWHEN_RESETGR);
 end
 
 function TellMeWhen_ShowConfig()
@@ -505,5 +498,3 @@ function TellMeWhen_StopSizing(self, button)
 	self:SetScript("OnUpdate", nil)
 	TellMeWhen_Settings["Groups"][self:GetParent():GetID()]["Scale"] = self:GetParent():GetScale();
 end
-
-

@@ -540,7 +540,7 @@
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="185" y="-28"/>
+								<AbsDimension x="175" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -549,7 +549,7 @@
 					<Anchors>
 						<Anchor point="BOTTOM" relativeTo="$parentSubText1" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="240" y="-28"/>
+								<AbsDimension x="230" y="-28"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -571,8 +571,6 @@
 				this.default = TellMeWhen_Reset;
 				this.cancel = TellMeWhen_Cancel;
 				InterfaceOptions_AddCategory(self);
-				InterfaceOptionsTellMeWhenPanelOnlyInCombatLabel:SetWidth(60);
-				InterfaceOptionsTellMeWhenPanelPrimarySpecLabel:SetWidth(60);
 			</OnLoad>
 			<OnShow>
 				TellMeWhen_OldSettings = CopyTable(TellMeWhen_Settings);

@@ -73,8 +73,8 @@ function TellMeWhen_OnlyInCombatButton_Update(self)
 end
 
 function TellMeWhen_SpecButton_Update(self)
-	local aSpec = C_Talent.GetActiveTalentGroup()
-	self:SetChecked(TellMeWhen_Settings["Groups"][self:GetParent():GetID()]["Spec"..aSpec]);
+	local currentSpec = C_Talent.GetActiveTalentGroup()
+	self:SetChecked(TellMeWhen_Settings["Groups"][self:GetParent():GetID()]["Spec"..currentSpec]);
 end
 
 function TellMeWhen_OnlyInCombatButton_OnClick(self)
@@ -89,11 +89,11 @@ end
 
 function TellMeWhen_SpecButton_OnClick(self)
 	local groupID = self:GetParent():GetID();
-	local aSpec = C_Talent.GetActiveTalentGroup()
+	local currentSpec = C_Talent.GetActiveTalentGroup()
 	if ( self:GetChecked() ) then
-		TellMeWhen_Settings["Groups"][groupID]["Spec"..aSpec] = true;
+		TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec] = true;
 	else
-		TellMeWhen_Settings["Groups"][groupID]["Spec"..aSpec] = false;
+		TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec] = false;
 	end
 	TellMeWhen_Group_Update(groupID);
 end

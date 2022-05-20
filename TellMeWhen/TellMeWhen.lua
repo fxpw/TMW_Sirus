@@ -101,6 +101,7 @@ function TellMeWhen_OnEvent(self, event)
 		-- initialization needs to be late enough that the icons can find their textures
 		self:RegisterEvent("PLAYER_TALENT_UPDATE");
 		TellMeWhen_Update();
+		TellMeWhen_UpdateVersion();
 	elseif ( event == "PLAYER_TALENT_UPDATE") then
 		TellmeWhen_TalentUpdate();
 		TellMeWhen_Update();
@@ -110,6 +111,12 @@ end
 function TellMeWhen_Update()
 	for groupID = 1, TELLMEWHEN_MAXGROUPS do
 		TellMeWhen_Group_Update(groupID);
+	end
+end
+
+function TellMeWhen_UpdateVersion()
+	if (TellMeWhen_Settings["Version"] < TELLMEWHEN_VERSION) then
+		TellMeWhen_Settings["Version"] = TELLMEWHEN_VERSION;
 	end
 end
 
@@ -210,7 +217,7 @@ function TellMeWhen_Group_Update(groupID)
 			group:Hide();
 		end
 	end
-	
+
 	if ( not TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec] ) then
 		TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec] = false
 	end

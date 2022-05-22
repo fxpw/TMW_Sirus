@@ -65,11 +65,11 @@ TELLMEWHEN_UIPANEL_UNLOCK = "Разблокировать";
 TELLMEWHEN_UIPANEL_TOOLTIP_ROWS = "Установите количество строк значков в этой группе";
 TELLMEWHEN_UIPANEL_TOOLTIP_COLUMNS = "Установите количество столбцов значков в этой группе";
 TELLMEWHEN_UIPANEL_TOOLTIP_ONLYINCOMBAT = "Установите флажок, чтобы отображать эту группу значков только в бою.";
-TELLMEWHEN_UIPANEL_TOOLTIP_PANEL = "Включите нужные панели";
+TELLMEWHEN_UIPANEL_TOOLTIP_PANEL = "Установите флажок, чтобы включить эту панель.\nНастройка меняется, в зависимости от выбранного набора талантов.";
 TELLMEWHEN_UIPANEL_SUBTEXT2 = 
 [[Панели работают в заблокированном состоянии.
 В разблокированном вы можете их настроить.
 Слеш команды:
 /tmw - переключение режима,
-/tmw options - настройки панелей,
+/tmw options - окно настроек,
 /tmw reset - полный сброс.]];

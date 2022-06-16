@@ -1,20 +1,9 @@
--- --------------------
--- TellMeWhen
--- Originally by Nephthys of Hyjal <lieandswell@yahoo.com>
--- Other contributions by
--- Oozebull of Twisting Nether
--- Banjankri of Blackrock
--- Predeter of Proudmoore
--- --------------------
-
 -- -------------
 -- ADDON GLOBALS
 -- -------------
 
-local LBF
-
 TellMeWhen = {};
-TELLMEWHEN_VERSION = "1.3.0";
+TELLMEWHEN_VERSION = GetAddOnMetadata("TellMeWhen","Version");
 TELLMEWHEN_MAXGROUPS = 8;
 TELLMEWHEN_MAXROWS = 7;
 TELLMEWHEN_ICONSPACING = 0;
@@ -34,26 +23,37 @@ TellMeWhen_Icon_Defaults = {
 	WpnEnchantType		= "mainhand",
 };
 
-
 TellMeWhen_Group_Defaults = {
 	Enabled			= false,
 	Scale			= 1.5,
 	Rows			= 1,
 	Columns			= 4,
-	Icons			= {},
 	OnlyInCombat	= false,
-	LBFGroup		= false,
+	Icons			= {
+		Specs1={},
+		Specs2={},
+		Specs3={},
+		Specs4={},
+		Specs5={},
+		Specs6={},
+		Specs7={},
+		Specs8={},
+		Specs9={},
+		Specs10={},
+	},
 };
-
-for iconID = 1, TELLMEWHEN_MAXROWS*TELLMEWHEN_MAXROWS do
-	TellMeWhen_Group_Defaults["Icons"][iconID] = TellMeWhen_Icon_Defaults;
-end;
 
 TellMeWhen_Defaults = {
 	Version 		= TELLMEWHEN_VERSION,
 	Locked 			= false,
 	Groups 			= {},
 };
+
+for iconID = 1, TELLMEWHEN_MAXROWS*TELLMEWHEN_MAXROWS do
+	for specID = 1, 10 do
+		TellMeWhen_Group_Defaults["Icons"]["Specs"..specID][iconID] = TellMeWhen_Icon_Defaults;
+	end;
+end;
 
 for groupID = 1, TELLMEWHEN_MAXGROUPS do
 	TellMeWhen_Defaults["Groups"][groupID] = TellMeWhen_Group_Defaults;
@@ -74,34 +74,47 @@ TellMeWhen_BuffEquivalencies["ImmuneToStun"] ="Divine Shield;Ice Block;The Beast
 TellMeWhen_BuffEquivalencies["ImmuneToMagicCC"] ="Divine Shield;Ice Block;The Beast Within;Beastial Wrath;Cyclone;Banish";
 TellMeWhen_BuffEquivalencies["FaerieFires"] ="Faerie Fire;Faerie Fire (Feral)";
 TellMeWhen_BuffEquivalencies["MovementSlowed"] = "Incapacitating Shout;Chains of Ice;Icy Clutch;Slow;Daze;Hamstring;Piercing Howl;Wing Clip;Frost Trap Aura;Frostbolt;Cone of Cold;Blast Wave;Mind Flay;Crippling Poison;Deadly Throw;Frost Shock;Earthbind;Curse of Exhaustion";
---Incapacitating Shout is cast by some mobs in Icecrown;Rocket Burst is the debuff from landing with the rocket pack during the gunship fight in ICC.
 TellMeWhen_BuffEquivalencies["MeleeSlowed"] = "Rocket Burst;Infected Wounds;Judgements of the Just;Earth Shock;Thunder Clap;Icy Touch";
---TellMeWhen_BuffEquivalencies["CastingSlowed"] = "";
+
 
 
 -- ---------------
 -- EXECUTIVE FRAME
 -- ---------------
 
+function TellMeWhen_SafeUpgrade(Old)
+	if (Old) then
+		local specID = TellmeWhen_GetActiveTalentGroup()
+		for groupID = 1, TELLMEWHEN_MAXGROUPS do
+			TellMeWhen_Settings["Groups"][groupID] = CopyTable(TellMeWhen_Group_Defaults);
+			TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID] = Old["Groups"][groupID]["Icons"];
+		end
+	end
+	TellMeWhen_Settings["Version"] = TELLMEWHEN_VERSION;
+end
+
 function TellMeWhen_OnEvent(self, event)
 	if ( event == 'VARIABLES_LOADED' ) then
-		LBF = LibStub("LibButtonFacade", true)
-		if LBF then
-			LBF:RegisterSkinCallback("TellMeWhen", TellMeWhen_SkinCallback, self);
-		end
-
 		SlashCmdList["TELLMEWHEN"] = TellMeWhen_SlashCommand;
 		SLASH_TELLMEWHEN1 = "/tellmewhen";
 		SLASH_TELLMEWHEN2 = "/tmw";
 		if ( not TellMeWhen_Settings ) then
 			TellMeWhen_Settings = CopyTable(TellMeWhen_Defaults);
 			TellMeWhen_Settings["Groups"][1]["Enabled"] = true;
+			local specID = TellmeWhen_GetActiveTalentGroup();
+			TellMeWhen_Settings["Groups"][1]["Spec"..specID] = true;
+		end
+		if (TellMeWhen_Settings["Groups"][1]["Icons"]["Specs1"] == nil) then
+			Old = {}
+			Old = CopyTable(TellMeWhen_Settings)
+			TellMeWhen_SafeUpgrade(Old);
+		elseif (TellMeWhen_Settings["Version"] < TELLMEWHEN_VERSION) then
+			TellMeWhen_Settings["Version"] = TELLMEWHEN_VERSION;
 		end
 	elseif ( event == "PLAYER_LOGIN" ) or ( event == "PLAYER_ENTERING_WORLD" ) then
 		-- initialization needs to be late enough that the icons can find their textures
 		self:RegisterEvent("PLAYER_TALENT_UPDATE");
 		TellMeWhen_Update();
-		TellMeWhen_UpdateVersion();
 	elseif ( event == "PLAYER_TALENT_UPDATE") then
 		TellmeWhen_TalentUpdate();
 		TellMeWhen_Update();
@@ -111,12 +124,6 @@ end
 function TellMeWhen_Update()
 	for groupID = 1, TELLMEWHEN_MAXGROUPS do
 		TellMeWhen_Group_Update(groupID);
-	end
-end
-
-function TellMeWhen_UpdateVersion()
-	if (TellMeWhen_Settings["Version"] < TELLMEWHEN_VERSION) then
-		TellMeWhen_Settings["Version"] = TELLMEWHEN_VERSION;
 	end
 end
 
@@ -134,7 +141,6 @@ end
 -- GROUP FRAME
 -- -----------
 
-
 function TellMeWhen_Group_OnEvent(self, event)
 	-- called if OnlyInCombat true for this group
 	if ( event == "PLAYER_REGEN_DISABLED" ) then
@@ -147,7 +153,7 @@ end
 -- Called when the configuration of the group has changed, when the addon
 -- is loaded or when tmw is locked or unlocked
 function TellMeWhen_Group_Update(groupID)
-	local currentSpec = TellmeWhen_GetActiveTalentGroup();
+	local specID = TellmeWhen_GetActiveTalentGroup();
 	local groupName = "TellMeWhen_Group"..groupID;
 	local group = getglobal(groupName);
 	local resizeButton = getglobal(groupName.."_ResizeButton");
@@ -159,8 +165,7 @@ function TellMeWhen_Group_Update(groupID)
 	local columns = TellMeWhen_Settings["Groups"][groupID]["Columns"];
 	local onlyInCombat = TellMeWhen_Settings["Groups"][groupID]["OnlyInCombat"];
 
-	genabled = TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec]
-
+	genabled = TellMeWhen_Settings["Groups"][groupID]["Spec"..specID]
 	if (genabled) then
 		for row = 1, rows do
 			for column = 1, columns do
@@ -198,9 +203,7 @@ function TellMeWhen_Group_Update(groupID)
 		else
 			resizeButton:Show();
 		end
-
-
-	end -- Enabled
+	end
 
 	if ( onlyInCombat and genabled and locked ) then
 		group:RegisterEvent("PLAYER_REGEN_ENABLED");
@@ -218,8 +221,8 @@ function TellMeWhen_Group_Update(groupID)
 		end
 	end
 
-	if ( not TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec] ) then
-		TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec] = false
+	if ( not TellMeWhen_Settings["Groups"][groupID]["Spec"..specID] ) then
+		TellMeWhen_Settings["Groups"][groupID]["Spec"..specID] = false
 	end
 end
 
@@ -229,9 +232,35 @@ end
 -- ICON FUNCTION
 -- -------------
 
-function TellMeWhen_Icon_Update(icon, groupID, iconID)
+local function time_split(t)
+	local hour = math.floor(t / 3600)
+	local min = math.floor((t % 3600) / 60)
+	local sec = (t % 3600) % 60
+	return tonumber(string.format("%.f",hour)), tonumber(string.format("%.f",min)), tonumber(string.format("%.f",sec))
+end
 
-	local iconSettings = TellMeWhen_Settings["Groups"][groupID]["Icons"][iconID];
+local function CreateFS(frame, endT)
+	if not frame.fs then
+		frame.fs = frame:CreateFontString(frame:GetName()..'CDTimer', 'OVERLAY', 'GameFontNormal')
+		frame.fs:SetPoint('CENTER', frame, 'CENTER')
+		frame.endTime = endT
+		frame:HookScript('OnUpdate', function(self)
+			local now = GetTime()-0.5
+			local hour, min, sec = time_split(self.endTime-now)
+			if hour > 0 then
+				self.fs:SetText(hour.."ч")
+			elseif min > 0 and min < 60 then
+				self.fs:SetText(min.."м")
+			elseif sec < 60 then
+				self.fs:SetText(sec)
+			end
+		end)
+	end
+end
+
+function TellMeWhen_Icon_Update(icon, groupID, iconID)
+	local specID = TellmeWhen_GetActiveTalentGroup();
+	local iconSettings = TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID][iconID];
 	local Enabled = iconSettings.Enabled;
 	local iconType = iconSettings.Type;
 	local CooldownType = iconSettings.CooldownType;
@@ -298,7 +327,6 @@ function TellMeWhen_Icon_Update(icon, groupID, iconID)
 			icon.absentAlpha = 1;
 		end
 
-
 		if ( iconType == "cooldown" ) then
 			if ( CooldownType == "spell" ) then
 				if ( GetSpellCooldown(TellMeWhen_GetSpellNames(icon.Name,1)) ) then
@@ -335,7 +363,6 @@ function TellMeWhen_Icon_Update(icon, groupID, iconID)
 			icon.Cooldown:SetReverse(false);
 
 		elseif ( iconType == "buff" ) then
-
 			icon:RegisterEvent("PLAYER_TARGET_CHANGED");
 			icon:RegisterEvent("PLAYER_FOCUS_CHANGED");
 			icon:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
@@ -430,6 +457,9 @@ function TellMeWhen_Icon_Update(icon, groupID, iconID)
 		icon.texture:SetVertexColor(1, 1, 1, 1);
 		TellMeWhen_Icon_ClearScripts(icon);
 	end
+	if not icon.Cooldown.fs then
+		CreateFS(icon.Cooldown, 0)
+	end
 end
 
 function TellMeWhen_Icon_ClearScripts(icon)
@@ -440,8 +470,7 @@ end
 function TellMeWhen_GetGCD()
 	--To test if GCD, look at an instant cast spell without a CD that player's
 	--class starts with with. If that spell is on CD, GCD is up.
-
-	--only look for DKs if player has BC expansion
+	--only look for DK if player has BC expansion
 	local ver = select(4, GetBuildInfo());
 		if (ver >= 30000) then
 		defaultSpells = {
@@ -473,7 +502,16 @@ function TellMeWhen_GetGCD()
 	return select(2,GetSpellCooldown(TellMeWhen_GetSpellNames(defaultSpells[unitClass],1)));
 end
 
-
+function TellMeWhen_Icon_SpellCooldown_OnEvent(self, ...)
+	local startTime, timeLeft, _ = GetSpellCooldown(TellMeWhen_GetSpellNames(self.Name,1));
+	if ( timeLeft ) then
+		CooldownFrame_SetTimer(self.Cooldown, startTime, timeLeft, 1);
+		if timeLeft > 5 then
+			startTime = startTime + timeLeft
+			self.Cooldown.endTime = startTime
+		end
+	end
+end
 
 function TellMeWhen_Icon_StatusCheck(icon, iconType)
 	-- this function is so OnEvent-based icons can do a check when the addon is locked
@@ -486,13 +524,6 @@ function TellMeWhen_Icon_StatusCheck(icon, iconType)
 	end
 end
 
-function TellMeWhen_Icon_SpellCooldown_OnEvent(self, ...)
-	local startTime, timeLeft, _ = GetSpellCooldown(TellMeWhen_GetSpellNames(self.Name,1));
-	if ( timeLeft ) then
-		CooldownFrame_SetTimer(self.Cooldown, startTime, timeLeft, 1);
-	end
-end
-
 function TellMeWhen_Icon_SpellCooldown_OnUpdate(self, elapsed)
 	self.updateTimer = self.updateTimer - elapsed;
 	if ( self.updateTimer <= 0 ) then
@@ -501,7 +532,7 @@ function TellMeWhen_Icon_SpellCooldown_OnUpdate(self, elapsed)
 		local inrange = IsSpellInRange(TellMeWhen_GetSpellNames(self.Name,1), self.Unit);
 		local _, nomana = IsUsableSpell(TellMeWhen_GetSpellNames(self.Name,1));
 		local OnGCD = TellMeWhen_GetGCD() == timeLeft and timeLeft > 0;
-		--name, rank, icon, powerCost,  isFunnel, powerType, castingTime,  minRange, maxRange
+		--name, rank, icon, powerCost, isFunnel, powerType, castingTime, minRange, maxRange
 		local _,_,_,_,_,_,_,minRange,maxRange = GetSpellInfo(self.Name);
 		if ( not maxRange or inrange == nil) then
 			inrange = 1;
@@ -527,6 +558,8 @@ function TellMeWhen_Icon_ItemCooldown_OnEvent(self)
 	local startTime, timeLeft, enable = GetItemCooldown(TellMeWhen_GetItemNames(self.Name,1));
 	if ( timeLeft ) then
 		CooldownFrame_SetTimer(self.Cooldown, startTime, timeLeft, 1);
+		startTime = startTime + timeLeft
+		self.Cooldown.endTime = startTime
 	end
 end
 
@@ -569,10 +602,8 @@ function TellMeWhen_Icon_BuffCheck(icon)
 		if icon.OnlyMine then filter = filter.."|PLAYER" end
 
 		for i, iName in ipairs(auraNames) do
-			--local buffName, rank, iconTexture, count, debuffType, duration, expirationTime, unitCaster, isStealable;
 			local buffName, _, iconTexture, count, _, duration, expirationTime, unitCaster = UnitAura(icon.Unit, iName, nil, filter);
 			if ( buffName ) then --and expirationTime > maxExpirationTime and ((( unitCaster == "player" ) or ( unitCaster == "pet" ) or ( unitCaster == "vehicle" )) or not icon.OnlyMine) ) then
-				--maxExpirationTime = expirationTime;
 				if ( icon.texture:GetTexture() ~= iconTexture) then
 					icon.texture:SetTexture(iconTexture);
 					icon.learnedTexture = true;
@@ -581,9 +612,6 @@ function TellMeWhen_Icon_BuffCheck(icon)
 					icon:SetAlpha(icon.presentAlpha);
 				end
 				icon.texture:SetVertexColor(1, 1, 1, 1);
---				if ( LBF ) then
---					LBF:SetNormalVertexColor(icon,1,1,1,1);
---				end
 				if ( count > 1 ) then
 					icon.countText:SetText(count);
 					icon.countText:Show();
@@ -592,6 +620,7 @@ function TellMeWhen_Icon_BuffCheck(icon)
 				end
 				if ( icon.ShowTimer and not UnitIsDead(icon.Unit)) then
 					CooldownFrame_SetTimer(icon.Cooldown, expirationTime - duration, duration, 1);
+					icon.Cooldown.endTime = expirationTime
 				end
 				processedBuffInAuraNames = true;
 			end
@@ -688,6 +717,8 @@ function TellMeWhen_Icon_WpnEnchant_OnUpdate(self, elapsed)
 			if (self.ShowTimer) then
 				if ( self.startTime ~= nil ) then
 					CooldownFrame_SetTimer(self.Cooldown, GetTime(), mainHandExpiration/1000, 1);
+					mainHandExpiration = GetTime() + mainHandExpiration/1000
+					self.Cooldown.endTime = mainHandExpiration
 				else
 					self.startTime = GetTime();
 				end
@@ -703,6 +734,8 @@ function TellMeWhen_Icon_WpnEnchant_OnUpdate(self, elapsed)
 			if (self.ShowTimer) then
 				if ( self.startTime ~= nil ) then
 					CooldownFrame_SetTimer(self.Cooldown, GetTime(), offHandExpiration/1000, 1);
+					offHandExpiration = GetTime() + offHandExpiration/1000
+					self.Cooldown.endTime = offHandExpiration
 				else
 					self.startTime = GetTime();
 				end
@@ -745,6 +778,8 @@ function TellMeWhen_Icon_Totem_OnEvent(self, event, ...)
 						precise = startTime + 1
 					end
 					CooldownFrame_SetTimer(self.Cooldown, precise, totemDuration, 1);
+					local totem = precise + totemDuration - 1
+					self.Cooldown.endTime = totem
 				end
 				self:SetScript("OnUpdate", nil);
 				break
@@ -821,28 +856,12 @@ function TellMeWhen_SplitNames(buffName,convertIDs)
 end
 
 function TellmeWhen_TalentUpdate()
-	activeSpec = C_Talent.GetActiveTalentGroup()
+	specID = C_Talent.GetActiveTalentGroup()
 end
 
 function TellmeWhen_GetActiveTalentGroup()
-	if ( activeSpec == nil ) then
+	if ( specID == nil ) then
 		TellmeWhen_TalentUpdate()
 	end
-	return activeSpec
-end
-
-function TellMeWhen_SkinCallback(arg, SkinID, Gloss, Backdrop, Group, Button, Colors)
--- when ButtonFacade skin is changed
-
--- Put info into TellMeWhen_Settings for later
---~ if not Group then
-
---~ else
---~ 	TellMeWhen_Settings[Group]["SkinID"] = SkinID
---~ 	TellMeWhen_Settings[Group]["Gloss"] = Gloss
---~ 	TellMeWhen_Settings[Group]["Backdrop"] = Backdrop
---~ 	TellMeWhen_Settings[Group]["Colors"] = Colors
---~ end
-
-
+	return specID
 end

@@ -1,11 +1,6 @@
--- --------------------
--- TellMeWhen
--- Originally by Nephthys of Hyjal <lieandswell@yahoo.com>
--- Major updates by
--- Oozebull of Twisting Nether
--- Banjankri of Blackrock
--- --------------------
-
+-- -----
+-- Slash
+-- -----
 
 function TellMeWhen_SlashCommand(cmd)
 	if ( cmd == TELLMEWHEN_CMD_RESET ) then
@@ -16,6 +11,8 @@ function TellMeWhen_SlashCommand(cmd)
 		TellMeWhen_LockToggle();
 	end
 end
+
+
 
 -- -----------------------
 -- INTERFACE OPTIONS PANEL
@@ -73,8 +70,8 @@ function TellMeWhen_OnlyInCombatButton_Update(self)
 end
 
 function TellMeWhen_SpecButton_Update(self)
-	local currentSpec = C_Talent.GetActiveTalentGroup()
-	self:SetChecked(TellMeWhen_Settings["Groups"][self:GetParent():GetID()]["Spec"..currentSpec]);
+	local specID = C_Talent.GetActiveTalentGroup();
+	self:SetChecked(TellMeWhen_Settings["Groups"][self:GetParent():GetID()]["Spec"..specID]);
 end
 
 function TellMeWhen_OnlyInCombatButton_OnClick(self)
@@ -89,11 +86,11 @@ end
 
 function TellMeWhen_SpecButton_OnClick(self)
 	local groupID = self:GetParent():GetID();
-	local currentSpec = C_Talent.GetActiveTalentGroup()
+	local specID = C_Talent.GetActiveTalentGroup();
 	if ( self:GetChecked() ) then
-		TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec] = true;
+		TellMeWhen_Settings["Groups"][groupID]["Spec"..specID] = true;
 	else
-		TellMeWhen_Settings["Groups"][groupID]["Spec"..currentSpec] = false;
+		TellMeWhen_Settings["Groups"][groupID]["Spec"..specID] = false;
 	end
 	TellMeWhen_Group_Update(groupID);
 end
@@ -130,7 +127,6 @@ function TellMeWhen_UIPanelUpdate()
 		local maxSpecs = C_Talent.GetNumTalentGroups()
 		for i = 1, maxSpecs do
 			local button = _G[uIPanel:GetName().."Group"..groupID.."Spec"..i.."Button"]
-
 			if button then
 				TellMeWhen_SpecButton_Update(button)
 			end
@@ -180,8 +176,9 @@ StaticPopupDialogs["TELLMEWHEN_CHOOSENAME_DIALOG"] = {
 	maxLetters = 200,
 	OnShow = function()
 		local groupID = TellMeWhen_CurrentIcon["groupID"];
+		local specID = C_Talent.GetActiveTalentGroup();
 		local iconID = TellMeWhen_CurrentIcon["iconID"];
-		local text = TellMeWhen_Settings["Groups"][groupID]["Icons"][iconID]["Name"];
+		local text = TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID][iconID]["Name"];
 		getglobal(this:GetName().."EditBox"):SetText(text);
 		getglobal(this:GetName().."EditBox"):SetFocus();
 	end,
@@ -299,13 +296,12 @@ function TellMeWhen_Icon_OnMouseDown(self, button)
 end
 
 function TellMeWhen_IconMenu_Initialize()
-
 	local groupID = TellMeWhen_CurrentIcon["groupID"];
+	local specID = C_Talent.GetActiveTalentGroup();
 	local iconID = TellMeWhen_CurrentIcon["iconID"];
-
-	local name = TellMeWhen_Settings["Groups"][groupID]["Icons"][iconID]["Name"];
-	local iconType = TellMeWhen_Settings["Groups"][groupID]["Icons"][iconID]["Type"];
-	local enabled = TellMeWhen_Settings["Groups"][groupID]["Icons"][iconID]["Enabled"];
+	local name = TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID][iconID]["Name"];
+	local iconType = TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID][iconID]["Type"];
+	local enabled = TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID][iconID]["Enabled"];
 
 	if ( UIDROPDOWNMENU_MENU_LEVEL == 2 ) then
 		local subMenus = TellMeWhen_IconMenu_SubMenus;
@@ -314,7 +310,7 @@ function TellMeWhen_IconMenu_Initialize()
 			local info = UIDropDownMenu_CreateInfo();
 			info.text = subMenus[UIDROPDOWNMENU_MENU_VALUE][index]["MenuText"];
 			info.value = subMenus[UIDROPDOWNMENU_MENU_VALUE][index]["Setting"];
-			info.checked = ( info.value == TellMeWhen_Settings["Groups"][groupID]["Icons"][iconID][UIDROPDOWNMENU_MENU_VALUE] );
+			info.checked = ( info.value == TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID][iconID][UIDROPDOWNMENU_MENU_VALUE] );
 			info.func = TellMeWhen_IconMenu_ChooseSetting;
 			UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL);
 		end
@@ -355,12 +351,7 @@ function TellMeWhen_IconMenu_Initialize()
 	UIDropDownMenu_AddButton(info);
 
 	-- additional options
-	if ( iconType == "cooldown" )
-	or ( iconType == "buff" )
-	or ( iconType == "reactive" )
-	or ( iconType == "wpnenchant" )
-	or ( iconType == "totem" )
-	then
+	if ( iconType == "cooldown" ) or ( iconType == "buff" ) or ( iconType == "reactive" ) or ( iconType == "wpnenchant" ) or ( iconType == "totem" ) then
 		info = UIDropDownMenu_CreateInfo();
 		info.disabled = true;
 		UIDropDownMenu_AddButton(info);
@@ -385,7 +376,7 @@ function TellMeWhen_IconMenu_Initialize()
 			info.hasArrow = moreOptions[index]["HasSubmenu"];
 			if not info.hasArrow then
 				info.func = TellMeWhen_IconMenu_ToggleSetting;
-				info.checked = TellMeWhen_Settings["Groups"][groupID]["Icons"][iconID][info.value];
+				info.checked = TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID][iconID][info.value];
 			end
 			info.keepShownOnClick = true;
 			UIDropDownMenu_AddButton(info);
@@ -399,7 +390,6 @@ function TellMeWhen_IconMenu_Initialize()
 
 	-- clear settings
 	if (( name ) and ( name ~= "" )) or ( iconType ~= "" ) then
-
 		info = UIDropDownMenu_CreateInfo();
 		info.disabled = true;
 		UIDropDownMenu_AddButton(info);
@@ -409,7 +399,6 @@ function TellMeWhen_IconMenu_Initialize()
 		info.func = TellMeWhen_IconMenu_ClearSettings;
 		UIDropDownMenu_AddButton(info);
 	end
-
 end
 
 function TellMeWhen_IconMenu_ShowNameDialog()
@@ -418,23 +407,26 @@ end
 
 function TellMeWhen_IconMenu_ChooseName(text)
 	local groupID = TellMeWhen_CurrentIcon["groupID"];
+	local specID = C_Talent.GetActiveTalentGroup();
 	local iconID = TellMeWhen_CurrentIcon["iconID"];
-	TellMeWhen_Settings["Groups"][groupID]["Icons"][iconID]["Name"] = text;
+	TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID][iconID]["Name"] = text;
 	getglobal("TellMeWhen_Group"..groupID.."_Icon"..iconID).learnedTexture = nil;
 	TellMeWhen_Icon_Update(getglobal("TellMeWhen_Group"..groupID.."_Icon"..iconID), groupID, iconID);
 end
 
 function TellMeWhen_IconMenu_ToggleSetting()
 	local groupID = TellMeWhen_CurrentIcon["groupID"];
+	local specID = C_Talent.GetActiveTalentGroup();
 	local iconID = TellMeWhen_CurrentIcon["iconID"];
-	TellMeWhen_Settings["Groups"][groupID]["Icons"][iconID][this.value] = this.checked;
+	TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID][iconID][this.value] = this.checked;
 	TellMeWhen_Icon_Update(getglobal("TellMeWhen_Group"..groupID.."_Icon"..iconID), groupID, iconID);
 end
 
 function TellMeWhen_IconMenu_ChooseSetting()
 	local groupID = TellMeWhen_CurrentIcon["groupID"];
+	local specID = C_Talent.GetActiveTalentGroup();
 	local iconID = TellMeWhen_CurrentIcon["iconID"];
-	TellMeWhen_Settings["Groups"][groupID]["Icons"][iconID][UIDROPDOWNMENU_MENU_VALUE] = this.value;
+	TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID][iconID][UIDROPDOWNMENU_MENU_VALUE] = this.value;
 	TellMeWhen_Icon_Update(getglobal("TellMeWhen_Group"..groupID.."_Icon"..iconID), groupID, iconID);
 	if ( UIDROPDOWNMENU_MENU_VALUE == "Type" ) then
 		CloseDropDownMenus();
@@ -443,8 +435,9 @@ end
 
 function TellMeWhen_IconMenu_ClearSettings()
 	local groupID = TellMeWhen_CurrentIcon["groupID"];
+	local specID = C_Talent.GetActiveTalentGroup();
 	local iconID = TellMeWhen_CurrentIcon["iconID"];
-	TellMeWhen_Settings["Groups"][groupID]["Icons"][iconID] = CopyTable(TellMeWhen_Icon_Defaults);
+	TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID][iconID] = CopyTable(TellMeWhen_Icon_Defaults);
 	TellMeWhen_Icon_Update(getglobal("TellMeWhen_Group"..groupID.."_Icon"..iconID), groupID, iconID);
 	CloseDropDownMenus();
 end

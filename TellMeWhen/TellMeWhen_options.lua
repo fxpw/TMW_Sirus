@@ -160,6 +160,22 @@ function TellMeWhen_Cancel()
 	TellMeWhen_Update();
 end
 
+local function IsAddOnEnabled(addon)
+	local _, _, _, enabled, _, reason = GetAddOnInfo(addon)
+	if reason ~= "MISSING" and enabled then
+		return {
+			{ Setting = "OFF", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER_OFF },
+			{ Setting = "CC", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER_CC },
+			{ Setting = "TMW", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER_TMW },
+		}
+	else
+		return {
+			{ Setting = "OFF", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER_OFF },
+			{ Setting = "TMW", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER_TMW },
+		}
+	end
+end
+
 
 
 -- --------
@@ -208,32 +224,32 @@ StaticPopupDialogs["TELLMEWHEN_CHOOSENAME_DIALOG"] = {
 TellMeWhen_IconMenu_CooldownOptions = {
 	{ VariableName = "CooldownType", MenuText = TELLMEWHEN_ICONMENU_COOLDOWNTYPE, HasSubmenu = true },
 	{ VariableName = "CooldownShowWhen", MenuText = TELLMEWHEN_ICONMENU_SHOWWHEN, HasSubmenu = true },
-	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER },
+	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER, HasSubmenu = true },
 };
 
 TellMeWhen_IconMenu_ReactiveOptions = {
 	{ VariableName = "CooldownShowWhen", MenuText = TELLMEWHEN_ICONMENU_SHOWWHEN, HasSubmenu = true},
-	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER },
+	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER, HasSubmenu = true },
 };
 
 TellMeWhen_IconMenu_BuffOptions = {
 	{ VariableName = "BuffOrDebuff", MenuText = TELLMEWHEN_ICONMENU_BUFFTYPE, HasSubmenu = true },
 	{ VariableName = "Unit", MenuText = TELLMEWHEN_ICONMENU_UNIT, HasSubmenu = true },
 	{ VariableName = "BuffShowWhen", MenuText = TELLMEWHEN_ICONMENU_BUFFSHOWWHEN, HasSubmenu = true },
-	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER },
+	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER, HasSubmenu = true },
 	{ VariableName = "OnlyMine", MenuText = TELLMEWHEN_ICONMENU_ONLYMINE },
 };
 
 TellMeWhen_IconMenu_WpnEnchantOptions = {
 	{ VariableName = "WpnEnchantType", MenuText = TELLMEWHEN_ICONMENU_WPNENCHANTTYPE, HasSubmenu = true },
 	{ VariableName = "BuffShowWhen", MenuText = TELLMEWHEN_ICONMENU_SHOWWHEN, HasSubmenu = true },
-	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER },
+	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER, HasSubmenu = true },
 };
 
 TellMeWhen_IconMenu_TotemOptions = {
 	{ VariableName = "Unit", MenuText = TELLMEWHEN_ICONMENU_UNIT, HasSubmenu = true },
 	{ VariableName = "BuffShowWhen", MenuText = TELLMEWHEN_ICONMENU_SHOWWHEN, HasSubmenu = true },
-	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER },
+	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER, HasSubmenu = true },
 };
 
 TellMeWhen_IconMenu_SubMenus = {
@@ -276,8 +292,8 @@ TellMeWhen_IconMenu_SubMenus = {
 		{ Setting = "mainhand", MenuText = TELLMEWHEN_ICONMENU_MAINHAND },
 		{ Setting = "offhand", MenuText = TELLMEWHEN_ICONMENU_OFFHAND },
 	},
+	ShowTimer = IsAddOnEnabled("OmniCC"),
 };
-
 
 function TellMeWhen_Icon_OnEnter(self, motion)
 	GameTooltip_SetDefaultAnchor(GameTooltip, this);

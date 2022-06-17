@@ -17,7 +17,7 @@ TellMeWhen_Icon_Defaults = {
 	Enabled				= false,
 	Name				= "",
 	OnlyMine			= false,
-	ShowTimer			= false,
+	ShowTimer			= "OFF",
 	Type				= "",
 	Unit				= "player",
 	WpnEnchantType		= "mainhand",
@@ -332,7 +332,7 @@ function TellMeWhen_Icon_Update(icon, groupID, iconID)
 				if ( GetSpellCooldown(TellMeWhen_GetSpellNames(icon.Name,1)) ) then
 					icon.texture:SetTexture(GetSpellTexture(TellMeWhen_GetSpellNames(icon.Name,1)));
 					icon:SetScript("OnUpdate", TellMeWhen_Icon_SpellCooldown_OnUpdate);
-					if (icon.ShowTimer) then
+					if (icon.ShowTimer == "CC" or icon.ShowTimer == "TMW") then
 						icon:RegisterEvent("ACTIONBAR_UPDATE_USABLE");
 						icon:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN");
 						icon:SetScript("OnEvent", TellMeWhen_Icon_SpellCooldown_OnEvent);
@@ -348,7 +348,7 @@ function TellMeWhen_Icon_Update(icon, groupID, iconID)
 				if ( itemName ) then
 					icon.texture:SetTexture(itemTexture);
 					icon:SetScript("OnUpdate", TellMeWhen_Icon_ItemCooldown_OnUpdate);
-					if (icon.ShowTimer) then
+					if (icon.ShowTimer == "CC" or icon.ShowTimer == "TMW") then
 						icon:RegisterEvent("BAG_UPDATE_COOLDOWN");
 						icon:SetScript("OnEvent", TellMeWhen_Icon_ItemCooldown_OnEvent);
 					else
@@ -457,7 +457,7 @@ function TellMeWhen_Icon_Update(icon, groupID, iconID)
 		icon.texture:SetVertexColor(1, 1, 1, 1);
 		TellMeWhen_Icon_ClearScripts(icon);
 	end
-	if not icon.Cooldown.fs then
+	if (not icon.Cooldown.fs) and (icon.ShowTimer == "TMW") then
 		CreateFS(icon.Cooldown, 0)
 	end
 end
@@ -618,7 +618,7 @@ function TellMeWhen_Icon_BuffCheck(icon)
 				else
 					icon.countText:Hide();
 				end
-				if ( icon.ShowTimer and not UnitIsDead(icon.Unit)) then
+				if (icon.ShowTimer == "CC" or icon.ShowTimer == "TMW") and not UnitIsDead(icon.Unit) then
 					CooldownFrame_SetTimer(icon.Cooldown, expirationTime - duration, duration, 1);
 					icon.Cooldown.endTime = expirationTime
 				end
@@ -637,7 +637,7 @@ function TellMeWhen_Icon_BuffCheck(icon)
 		end
 
 		icon.countText:Hide();
-		if ( icon.ShowTimer  ) then
+		if (icon.ShowTimer == "CC" or icon.ShowTimer == "TMW") then
 			CooldownFrame_SetTimer(icon.Cooldown, 0, 0, 0);
 		end
 	else
@@ -650,7 +650,7 @@ function TellMeWhen_Icon_Reactive_OnEvent(self, event)
 	if ( event == "ACTIONBAR_UPDATE_USABLE") then
 		TellMeWhen_Icon_ReactiveCheck(self);
 	elseif ( event == "ACTIONBAR_UPDATE_COOLDOWN" ) then
-		if ( self.ShowTimer ) then
+		if (self.ShowTimer == "CC" or self.ShowTimer == "TMW") then
 			TellMeWhen_Icon_SpellCooldown_OnEvent(self, event);
 		end
 		TellMeWhen_Icon_ReactiveCheck(self);
@@ -714,7 +714,7 @@ function TellMeWhen_Icon_WpnEnchant_OnUpdate(self, elapsed)
 			else
 				self.countText:Hide();
 			end
-			if (self.ShowTimer) then
+			if (self.ShowTimer == "CC" or self.ShowTimer == "TMW") then
 				if ( self.startTime ~= nil ) then
 					CooldownFrame_SetTimer(self.Cooldown, GetTime(), mainHandExpiration/1000, 1);
 					mainHandExpiration = GetTime() + mainHandExpiration/1000
@@ -731,7 +731,7 @@ function TellMeWhen_Icon_WpnEnchant_OnUpdate(self, elapsed)
 			else
 				self.countText:Hide();
 			end
-			if (self.ShowTimer) then
+			if (self.ShowTimer == "CC" or self.ShowTimer == "TMW") then
 				if ( self.startTime ~= nil ) then
 					CooldownFrame_SetTimer(self.Cooldown, GetTime(), offHandExpiration/1000, 1);
 					offHandExpiration = GetTime() + offHandExpiration/1000
@@ -768,7 +768,7 @@ function TellMeWhen_Icon_Totem_OnEvent(self, event, ...)
 					--self.texture:SetTexture("Interface\\Icons\\INV_Misc_QuestionMark");
 				end
 
-				if ( self.ShowTimer ) then
+				if (self.ShowTimer == "CC" or icon.ShowTimer == "TMW") then
 					-- The startTime reported here is both cast to an int and off by
 					-- a latency meaning it can be significantly low.  So we cache the GetTime
 					-- that the totem actually appeared, so long as GetTime is reasonably close to

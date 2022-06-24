@@ -52,6 +52,8 @@ TELLMEWHEN_ICONMENU_WPNENCHANTTYPE = "Слот оружия";
 TELLMEWHEN_ICONMENU_MAINHAND = "Правая рука";
 TELLMEWHEN_ICONMENU_OFFHAND = "Левая рука";
 
+TELLMEWHEN_ICONMENU_FONT = "Шрифт текста"
+
 TELLMEWHEN_ICONMENU_CLEAR = "Очистить настройки";
 TELLMEWHEN_GROUP = "Группа "
 TELLMEWHEN_RESET = " позиция сброшена."

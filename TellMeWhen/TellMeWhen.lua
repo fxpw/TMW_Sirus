@@ -18,6 +18,7 @@ TellMeWhen_Icon_Defaults = {
 	Name				= "",
 	OnlyMine			= false,
 	ShowTimer			= "OFF",
+	Font				= "Fonts\\FRIZQT__.TTF",
 	Type				= "",
 	Unit				= "player",
 	WpnEnchantType		= "mainhand",
@@ -90,7 +91,6 @@ function TellMeWhen_SafeUpgrade(Old)
 			TellMeWhen_Settings["Groups"][groupID]["Icons"]["Specs"..specID] = Old["Groups"][groupID]["Icons"];
 		end
 	end
-	TellMeWhen_Settings["Version"] = TELLMEWHEN_VERSION;
 end
 
 function TellMeWhen_OnEvent(self, event)
@@ -108,7 +108,8 @@ function TellMeWhen_OnEvent(self, event)
 			Old = {}
 			Old = CopyTable(TellMeWhen_Settings)
 			TellMeWhen_SafeUpgrade(Old);
-		elseif (TellMeWhen_Settings["Version"] < TELLMEWHEN_VERSION) then
+		end
+		if (TellMeWhen_Settings["Version"] < TELLMEWHEN_VERSION) then
 			TellMeWhen_Settings["Version"] = TELLMEWHEN_VERSION;
 		end
 	elseif ( event == "PLAYER_LOGIN" ) or ( event == "PLAYER_ENTERING_WORLD" ) then
@@ -239,12 +240,15 @@ local function time_split(t)
 	return tonumber(string.format("%.f",hour)), tonumber(string.format("%.f",min)), tonumber(string.format("%.f",sec))
 end
 
-local function CreateFS(frame, endT)
+local function CreateFS(frame, endT, font)
 	if not frame.fs then
-		frame.fs = frame:CreateFontString(frame:GetName()..'CDTimer', 'OVERLAY', 'GameFontNormal')
-		frame.fs:SetPoint('CENTER', frame, 'CENTER')
+		frame.fs = frame:CreateFontString(frame:GetName()..'CDTimer', 'OVERLAY')
+		frame.fs:SetPoint('CENTER', frame)
+		frame.fs:SetVertexColor(255, 255, 0, 1)
 		frame.endTime = endT
+		frame.font = font
 		frame:HookScript('OnUpdate', function(self)
+			self.fs:SetFont(self.font, 11, "OUTLINE")
 			local now = GetTime()-0.5
 			local hour, min, sec = time_split(self.endTime-now)
 			if hour > 0 then
@@ -266,6 +270,7 @@ function TellMeWhen_Icon_Update(icon, groupID, iconID)
 	local CooldownType = iconSettings.CooldownType;
 	local CooldownShowWhen = iconSettings.CooldownShowWhen;
 	local BuffShowWhen = iconSettings.BuffShowWhen;
+	icon.font = iconSettings.Font;
 	icon.Name = iconSettings.Name;
 	icon.Unit = iconSettings.Unit;
 	icon.ShowTimer = iconSettings.ShowTimer;
@@ -458,7 +463,7 @@ function TellMeWhen_Icon_Update(icon, groupID, iconID)
 		TellMeWhen_Icon_ClearScripts(icon);
 	end
 	if (not icon.Cooldown.fs) and (icon.ShowTimer == "TMW") then
-		CreateFS(icon.Cooldown, 0)
+		CreateFS(icon.Cooldown, 0, icon.font)
 	end
 end
 
@@ -509,6 +514,7 @@ function TellMeWhen_Icon_SpellCooldown_OnEvent(self, ...)
 		if timeLeft > 5 then
 			startTime = startTime + timeLeft
 			self.Cooldown.endTime = startTime
+			self.Cooldown.font = self.font
 		end
 	end
 end
@@ -560,6 +566,7 @@ function TellMeWhen_Icon_ItemCooldown_OnEvent(self)
 		CooldownFrame_SetTimer(self.Cooldown, startTime, timeLeft, 1);
 		startTime = startTime + timeLeft
 		self.Cooldown.endTime = startTime
+		self.Cooldown.font = self.font
 	end
 end
 
@@ -568,6 +575,14 @@ function TellMeWhen_Icon_ItemCooldown_OnUpdate(self, elapsed)
 	if ( self.updateTimer <= 0 ) then
 		self.updateTimer = TELLMEWHEN_UPDATE_INTERVAL;
 		local _, timeLeft, _ = GetItemCooldown(TellMeWhen_GetItemNames(self.Name,1));
+		local Count = GetItemCount(TellMeWhen_GetItemNames(self.Name,1));
+		if ( Count > 1 ) then
+			self.countText:SetFont(self.font, 10, "OUTLINE")
+			self.countText:SetText(Count);
+			self.countText:Show();
+		else
+			self.countText:Hide();
+		end
 		--Check that name was valid first
 		if ( timeLeft ) then
 			if ( timeLeft == 0 or TellMeWhen_GetGCD() == timeLeft ) then
@@ -613,6 +628,7 @@ function TellMeWhen_Icon_BuffCheck(icon)
 				end
 				icon.texture:SetVertexColor(1, 1, 1, 1);
 				if ( count > 1 ) then
+					icon.countText:SetFont(icon.font, 10, "OUTLINE")
 					icon.countText:SetText(count);
 					icon.countText:Show();
 				else
@@ -621,6 +637,7 @@ function TellMeWhen_Icon_BuffCheck(icon)
 				if (icon.ShowTimer == "CC" or icon.ShowTimer == "TMW") and not UnitIsDead(icon.Unit) then
 					CooldownFrame_SetTimer(icon.Cooldown, expirationTime - duration, duration, 1);
 					icon.Cooldown.endTime = expirationTime
+					icon.Cooldown.font = icon.font
 				end
 				processedBuffInAuraNames = true;
 			end
@@ -709,6 +726,7 @@ function TellMeWhen_Icon_WpnEnchant_OnUpdate(self, elapsed)
 		if ( self.WpnEnchantType == "mainhand" ) and ( hasMainHandEnchant ) then
 			self:SetAlpha(self.presentAlpha);
 			if ( mainHandCharges > 1 ) then
+				self.countText:SetFont(self.font, 10, "OUTLINE")
 				self.countText:SetText(mainHandCharges);
 				self.countText:Show();
 			else
@@ -719,6 +737,7 @@ function TellMeWhen_Icon_WpnEnchant_OnUpdate(self, elapsed)
 					CooldownFrame_SetTimer(self.Cooldown, GetTime(), mainHandExpiration/1000, 1);
 					mainHandExpiration = GetTime() + mainHandExpiration/1000
 					self.Cooldown.endTime = mainHandExpiration
+					self.Cooldown.font = self.font
 				else
 					self.startTime = GetTime();
 				end
@@ -726,6 +745,7 @@ function TellMeWhen_Icon_WpnEnchant_OnUpdate(self, elapsed)
 		elseif ( self.WpnEnchantType == "offhand" ) and ( hasOffHandEnchant ) then
 			self:SetAlpha(self.presentAlpha);
 			if ( offHandCharges > 1 ) then
+				self.countText:SetFont(self.font, 10, "OUTLINE")
 				self.countText:SetText(offHandCharges);
 				self.countText:Show();
 			else
@@ -736,6 +756,7 @@ function TellMeWhen_Icon_WpnEnchant_OnUpdate(self, elapsed)
 					CooldownFrame_SetTimer(self.Cooldown, GetTime(), offHandExpiration/1000, 1);
 					offHandExpiration = GetTime() + offHandExpiration/1000
 					self.Cooldown.endTime = offHandExpiration
+					self.Cooldown.font = self.font
 				else
 					self.startTime = GetTime();
 				end
@@ -780,6 +801,7 @@ function TellMeWhen_Icon_Totem_OnEvent(self, event, ...)
 					CooldownFrame_SetTimer(self.Cooldown, precise, totemDuration, 1);
 					local totem = precise + totemDuration - 1
 					self.Cooldown.endTime = totem
+					self.Cooldown.font = self.font
 				end
 				self:SetScript("OnUpdate", nil);
 				break

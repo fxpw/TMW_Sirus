@@ -160,13 +160,18 @@ function TellMeWhen_Cancel()
 	TellMeWhen_Update();
 end
 
+
+
+-- --------
+-- ICON GUI
+-- --------
+
 local function IsAddOnEnabled(addon)
 	local _, _, _, enabled, _, reason = GetAddOnInfo(addon)
 	if reason ~= "MISSING" and enabled then
 		return {
 			{ Setting = "OFF", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER_OFF },
 			{ Setting = "CC", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER_CC },
-			{ Setting = "TMW", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER_TMW },
 		}
 	else
 		return {
@@ -175,12 +180,6 @@ local function IsAddOnEnabled(addon)
 		}
 	end
 end
-
-
-
--- --------
--- ICON GUI
--- --------
 
 TellMeWhen_CurrentIcon = { groupID = 1, iconID = 1 };		-- a dirty hack, i know.
 
@@ -225,6 +224,7 @@ TellMeWhen_IconMenu_CooldownOptions = {
 	{ VariableName = "CooldownType", MenuText = TELLMEWHEN_ICONMENU_COOLDOWNTYPE, HasSubmenu = true },
 	{ VariableName = "CooldownShowWhen", MenuText = TELLMEWHEN_ICONMENU_SHOWWHEN, HasSubmenu = true },
 	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER, HasSubmenu = true },
+	{ VariableName = "Font", MenuText = TELLMEWHEN_ICONMENU_FONT, HasSubmenu = true },
 };
 
 TellMeWhen_IconMenu_ReactiveOptions = {
@@ -237,6 +237,7 @@ TellMeWhen_IconMenu_BuffOptions = {
 	{ VariableName = "Unit", MenuText = TELLMEWHEN_ICONMENU_UNIT, HasSubmenu = true },
 	{ VariableName = "BuffShowWhen", MenuText = TELLMEWHEN_ICONMENU_BUFFSHOWWHEN, HasSubmenu = true },
 	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER, HasSubmenu = true },
+	{ VariableName = "Font", MenuText = TELLMEWHEN_ICONMENU_FONT, HasSubmenu = true },
 	{ VariableName = "OnlyMine", MenuText = TELLMEWHEN_ICONMENU_ONLYMINE },
 };
 
@@ -244,12 +245,14 @@ TellMeWhen_IconMenu_WpnEnchantOptions = {
 	{ VariableName = "WpnEnchantType", MenuText = TELLMEWHEN_ICONMENU_WPNENCHANTTYPE, HasSubmenu = true },
 	{ VariableName = "BuffShowWhen", MenuText = TELLMEWHEN_ICONMENU_SHOWWHEN, HasSubmenu = true },
 	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER, HasSubmenu = true },
+	{ VariableName = "Font", MenuText = TELLMEWHEN_ICONMENU_FONT, HasSubmenu = true },
 };
 
 TellMeWhen_IconMenu_TotemOptions = {
 	{ VariableName = "Unit", MenuText = TELLMEWHEN_ICONMENU_UNIT, HasSubmenu = true },
 	{ VariableName = "BuffShowWhen", MenuText = TELLMEWHEN_ICONMENU_SHOWWHEN, HasSubmenu = true },
 	{ VariableName = "ShowTimer", MenuText = TELLMEWHEN_ICONMENU_SHOWTIMER, HasSubmenu = true },
+	{ VariableName = "Font", MenuText = TELLMEWHEN_ICONMENU_FONT, HasSubmenu = true },
 };
 
 TellMeWhen_IconMenu_SubMenus = {
@@ -291,6 +294,12 @@ TellMeWhen_IconMenu_SubMenus = {
 	WpnEnchantType = {
 		{ Setting = "mainhand", MenuText = TELLMEWHEN_ICONMENU_MAINHAND },
 		{ Setting = "offhand", MenuText = TELLMEWHEN_ICONMENU_OFFHAND },
+	},
+	Font = {
+		{ Setting = "Fonts\\ARIALN.TTF", MenuText = "Arial Narrow"},
+		{ Setting = "Fonts\\FRIZQT__.TTF", MenuText = "Friz Quadrata TT"},
+		{ Setting = "Fonts\\SKURRI.TTF", MenuText = "Skurri"},
+		{ Setting = "Fonts\\MORPHEUS.ttf", MenuText = "Morpheus"}
 	},
 	ShowTimer = IsAddOnEnabled("OmniCC"),
 };

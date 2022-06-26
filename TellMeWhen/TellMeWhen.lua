@@ -248,7 +248,11 @@ local function CreateFS(frame, endT, font)
 		frame.endTime = endT
 		frame.font = font
 		frame:HookScript('OnUpdate', function(self)
-			self.fs:SetFont(self.font, 11, "OUTLINE")
+			if self.font == nil then
+				self.fs:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE")
+			else
+				self.fs:SetFont(self.font, 11, "OUTLINE")
+			end
 			local now = GetTime()-0.5
 			local hour, min, sec = time_split(self.endTime-now)
 			if hour > 0 then
@@ -577,8 +581,12 @@ function TellMeWhen_Icon_ItemCooldown_OnUpdate(self, elapsed)
 		local _, timeLeft, _ = GetItemCooldown(TellMeWhen_GetItemNames(self.Name,1));
 		local Count = GetItemCount(TellMeWhen_GetItemNames(self.Name,1));
 		if ( Count > 1 ) then
-			self.countText:SetFont(self.font, 10, "OUTLINE")
-			self.countText:SetText(Count);
+			if self.font == nil then
+				self.countText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+			else
+				self.countText:SetFont(self.font, 10, "OUTLINE")
+			end
+		self.countText:SetText(Count);
 			self.countText:Show();
 		else
 			self.countText:Hide();
@@ -628,7 +636,11 @@ function TellMeWhen_Icon_BuffCheck(icon)
 				end
 				icon.texture:SetVertexColor(1, 1, 1, 1);
 				if ( count > 1 ) then
-					icon.countText:SetFont(icon.font, 10, "OUTLINE")
+					if icon.font == nil then
+						icon.countText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+					else
+						icon.countText:SetFont(icon.font, 10, "OUTLINE")
+					end
 					icon.countText:SetText(count);
 					icon.countText:Show();
 				else
@@ -726,7 +738,11 @@ function TellMeWhen_Icon_WpnEnchant_OnUpdate(self, elapsed)
 		if ( self.WpnEnchantType == "mainhand" ) and ( hasMainHandEnchant ) then
 			self:SetAlpha(self.presentAlpha);
 			if ( mainHandCharges > 1 ) then
-				self.countText:SetFont(self.font, 10, "OUTLINE")
+				if self.font == nil then
+					self.countText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+				else
+					self.countText:SetFont(self.font, 10, "OUTLINE")
+				end
 				self.countText:SetText(mainHandCharges);
 				self.countText:Show();
 			else
@@ -745,7 +761,11 @@ function TellMeWhen_Icon_WpnEnchant_OnUpdate(self, elapsed)
 		elseif ( self.WpnEnchantType == "offhand" ) and ( hasOffHandEnchant ) then
 			self:SetAlpha(self.presentAlpha);
 			if ( offHandCharges > 1 ) then
-				self.countText:SetFont(self.font, 10, "OUTLINE")
+				if self.font == nil then
+					self.countText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+				else
+					self.countText:SetFont(self.font, 10, "OUTLINE")
+				end
 				self.countText:SetText(offHandCharges);
 				self.countText:Show();
 			else
